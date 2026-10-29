@@ -509,10 +509,10 @@ export const ProfileSettingsView: React.FC<{ onRetakeAssessment: () => void }> =
         <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-xs font-bold text-slate-900 dark:text-white">
-              Reset Local Session Data
+              Reset Session Progress
             </h3>
             <p className="text-[11px] text-slate-500 dark:text-slate-400">
-              Clear your locally saved assessment, interview, and task progress to start fresh.
+              Clear your saved assessment, interview, and task progress to start fresh.
             </p>
           </div>
 
@@ -549,7 +549,7 @@ export const ProfileSettingsView: React.FC<{ onRetakeAssessment: () => void }> =
                 Reset Progress Data?
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                This will reset your local diagnostic scores, daily tasks, and interview records back to initial state.
+                This will reset your diagnostic scores, daily tasks, and interview records back to initial state.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 pt-2">

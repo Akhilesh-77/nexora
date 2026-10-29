@@ -15,7 +15,7 @@ try {
     GoogleGenAI = genaiModule.GoogleGenAI;
   }
 } catch (e) {
-  // Graceful fallback to local rule-based intelligence
+  // Graceful fallback to deterministic rule-based intelligence
 }
 
 router.post('/query', requireAuth, async (req: AuthRequest, res): Promise<any> => {
@@ -38,7 +38,7 @@ router.post('/query', requireAuth, async (req: AuthRequest, res): Promise<any> =
     if (process.env.GEMINI_API_KEY && GoogleGenAI) {
       try {
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-        const systemPrompt = `You are NEXORA AI, a local-first engineering career mentor and placement prep assistant.
+        const systemPrompt = `You are NEXORA AI, an intelligent engineering career mentor and placement prep assistant.
 The student is studying "${branch}" and targeting the role "${targetRole}".
 Provide concise, technically precise, encouraging answers.
 Cover concept explanations, algorithms, system design, or interview strategies.
@@ -67,12 +67,12 @@ Keep explanations under 200 words. Always format with clear markdown bullets.`;
           });
         }
       } catch (aiErr: any) {
-        console.warn('[NEXORA Assistant] Cloud model unavailable, falling back to local engine:', aiErr.message);
+        console.warn('[NEXORA Assistant] Cloud model unavailable, falling back to deterministic engine:', aiErr.message);
       }
     }
 
     // -------------------------------------------------------------------
-    // Strategy B: Deterministic Local Intelligence Engine (100% Offline)
+    // Strategy B: Deterministic Intelligence Engine
     // -------------------------------------------------------------------
 
     // 1. "What should I study next?"
@@ -121,7 +121,7 @@ Keep explanations under 200 words. Always format with clear markdown bullets.`;
       }
 
       return res.json({
-        reply: `Here is your verified preparation summary from your local MongoDB database:
+        reply: `Here is your verified preparation summary from your database:
 • **Lessons Completed:** ${lessonsCount}
 • **Quizzes Taken:** ${quizzesCount}
 • **Average Quiz Score:** ${avgScore}
@@ -225,7 +225,7 @@ ${matchedModule.detailedExplanation.slice(0, 320)}...
 
     // Default Guidance Response
     return res.json({
-      reply: `I am your local NEXORA learning assistant running directly on your computer with real MongoDB progress tracking.
+      reply: `I am your NEXORA career mentor with continuous progress tracking.
 
 You can ask me:
 • *"What should I study next?"*

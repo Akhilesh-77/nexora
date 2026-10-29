@@ -654,7 +654,7 @@ router.post('/run', async (req, res): Promise<any> => {
     const lang = (language || 'python').toLowerCase();
     if (lang !== 'python' && lang !== 'javascript') {
       return res.status(400).json({
-        error: `Language '${language}' is not currently supported for local execution. Use Python or JavaScript.`,
+        error: `Language '${language}' is not currently supported. Use Python or JavaScript.`,
       });
     }
 
@@ -691,7 +691,7 @@ router.post('/submit', authenticateOptional, async (req: AuthRequest, res): Prom
     const lang = (language || 'python').toLowerCase();
     if (lang !== 'python' && lang !== 'javascript') {
       return res.status(400).json({
-        error: `Language '${language}' is not currently supported for local execution. Use Python or JavaScript.`,
+        error: `Language '${language}' is not currently supported. Use Python or JavaScript.`,
       });
     }
 

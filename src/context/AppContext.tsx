@@ -401,7 +401,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       } else {
         setDbStatus({
           connected: false,
-          error: res.data?.database?.error || res.error || 'Cannot connect to MongoDB at mongodb://127.0.0.1:27017/nexora',
+          error: res.data?.database?.error || res.error || 'Cannot establish connection to MongoDB database.',
           checking: false,
         });
       }

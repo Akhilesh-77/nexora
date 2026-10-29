@@ -59,10 +59,10 @@ export const aiService = {
         }
       }
     } catch (e) {
-      console.warn('Backend interview evaluation unavailable, falling back to local evaluation:', e);
+      console.warn('Backend interview evaluation unavailable, falling back to deterministic evaluation:', e);
     }
 
-    // Local smart heuristic fallback
+    // Smart heuristic fallback
     const wordCount = params.answer.trim().split(/\s+/).length;
     let base = 68;
     if (wordCount >= 45) base += 18;
@@ -120,10 +120,10 @@ export const aiService = {
         }
       }
     } catch (e) {
-      console.warn('Backend resume improve unavailable, using smart local rewriter:', e);
+      console.warn('Backend resume improve unavailable, using smart rewriter:', e);
     }
 
-    // Local fallback
+    // Built-in fallback
     const lines = params.text.split('\n').filter((l) => l.trim().length > 0);
     const bullets = lines.map((line) => {
       let cleaned = line.replace(/^[-•*]\s*/, '').trim();
@@ -170,7 +170,7 @@ export const aiService = {
         }
       }
     } catch (e) {
-      console.warn('Backend advice unavailable, using local strategy generator:', e);
+      console.warn('Backend advice unavailable, using strategy generator:', e);
     }
 
     const weak = params.assessmentResults?.weakAreas?.[0] || 'Data Structures';

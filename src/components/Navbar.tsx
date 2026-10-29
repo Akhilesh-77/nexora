@@ -69,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenMobileMenu }) => {
     communication: { title: 'Communication & HR Drills', subtitle: 'Behavioral, situational, and STAR method answers' },
     reports: { title: 'Progress Reports', subtitle: 'Track your preparation journey' },
     profile: { title: 'Student Profile', subtitle: 'Academic background and career goals' },
-    settings: { title: 'Preferences & System', subtitle: 'Theme, notifications, and demo controls' },
+    settings: { title: 'Preferences & System', subtitle: 'Theme, notifications, and platform preferences' },
     'learning-studio': { title: 'Learning Studio', subtitle: 'Domain-specific modules, step-by-step examples & knowledge checks' },
     admin: { title: 'Administrator Control Plane', subtitle: 'System analytics, user management & question bank control' },
   };
@@ -272,7 +272,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenMobileMenu }) => {
                     className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30 rounded-xl transition-colors"
                   >
                     <RotateCcw className="w-4 h-4 text-amber-500" />
-                    Reset Demo Progress
+                    Reset Practice Progress
                   </button>
                 </div>
 
@@ -282,7 +282,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenMobileMenu }) => {
                     className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-xl transition-colors"
                   >
                     <LogOut className="w-4 h-4 text-rose-500" />
-                    Sign Out Demo
+                    Sign Out
                   </button>
                 </div>
               </div>
@@ -299,7 +299,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenMobileMenu }) => {
               <RotateCcw className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-[#202334] dark:text-white">
-              Reset Demo Progress?
+              Reset Practice Progress?
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
               This will restore all diagnostic assessment answers, daily tasks, mock interview histories, and placement simulation rounds back to their original state.
@@ -320,7 +320,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenMobileMenu }) => {
                 }}
                 className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-amber-500 to-rose-500 shadow-md hover:brightness-105 transition-all"
               >
-                Yes, Reset Demo Data
+                Yes, Reset Practice Data
               </button>
             </div>
           </div>

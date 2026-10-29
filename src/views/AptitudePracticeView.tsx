@@ -59,7 +59,7 @@ export const AptitudePracticeView: React.FC = () => {
     }
   };
 
-  // Load questions dynamically from MongoDB with local mock fallback
+  // Load questions dynamically from MongoDB with fallback
   const fetchQuestions = async () => {
     setLoading(true);
     setActiveQuestionIndex(0);
@@ -163,7 +163,7 @@ export const AptitudePracticeView: React.FC = () => {
     }
   };
 
-  // Calculate local score if verifiedResult is not available yet
+  // Calculate score if verifiedResult is not available yet
   let localCorrect = 0;
   questions.forEach((q, idx) => {
     if (answers[idx] === q.correctIndex) {

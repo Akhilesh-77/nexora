@@ -39,7 +39,7 @@ const MainAppContent: React.FC = () => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // 1. Unauthenticated -> Show Local Authentication Portal
+  // 1. Unauthenticated -> Show Authentication Portal
   if (!isAuthenticated) {
     return (
       <>
@@ -137,9 +137,7 @@ const MainAppContent: React.FC = () => {
             <div className="flex items-center gap-2">
               <Server className="w-4 h-4 shrink-0" />
               <span>
-                Local MongoDB is stopped or unreachable at{' '}
-                <code className="bg-rose-700 px-1 py-0.5 rounded font-mono">127.0.0.1:27017</code>.
-                Data cannot be saved until MongoDB is running.
+                Database Connection Offline. Your session is running in cached mode until connectivity is restored.
               </span>
             </div>
             <button
@@ -165,7 +163,7 @@ const MainAppContent: React.FC = () => {
       {/* Central Floating Nexus Orb Navigation & Voice AI */}
       {showNexusOrb && <FloatingArcNav />}
 
-      {/* Floating Local AI Assistant */}
+      {/* Floating NEXORA AI Assistant */}
       <NexoraAssistant />
     </div>
   );

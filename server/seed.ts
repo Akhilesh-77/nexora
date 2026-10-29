@@ -278,7 +278,7 @@ const CAREER_ROLES = [
       { question: 'Describe how you navigated latency and cost constraints when building an AI feature.', starFocus: 'Model tiering (flash vs pro), semantic caching, and streaming responses.' },
     ],
     exampleProjects: [
-      { title: 'Domain-Specific Engineering Tutor with RAG', stack: 'Python, FastAPI, ChromaDB, LangChain', description: 'Constructed local RAG system indexing 50 engineering textbooks with sub-second citation retrieval.' },
+      { title: 'Domain-Specific Engineering Tutor with RAG', stack: 'Python, FastAPI, ChromaDB, LangChain', description: 'Constructed enterprise RAG system indexing 50 engineering textbooks with sub-second citation retrieval.' },
     ],
     resumeGuidance: {
       keywords: ['Generative AI', 'RAG Pipelines', 'Vector Databases', 'Prompt Engineering', 'LangChain'],
@@ -1561,7 +1561,7 @@ export async function seedDatabase(options: { forceFresh?: boolean } = {}) {
   try {
     // 1. Initial Administrator Setup
     const adminUsername = (process.env.ADMIN_USERNAME || 'admin').trim().toLowerCase();
-    const adminEmail = (process.env.ADMIN_EMAIL || 'admin@nexora.local').trim().toLowerCase();
+    const adminEmail = (process.env.ADMIN_EMAIL || 'admin@nexora.edu').trim().toLowerCase();
     const adminPassword = process.env.ADMIN_PASSWORD || 'AdminSecurePass2026!';
 
     let admin = await User.findOne({

@@ -510,7 +510,7 @@ export const NexoraAssistant: React.FC = () => {
           {/* Footer Transparency Notice */}
           <div className="px-4 py-2 bg-slate-50 dark:bg-[#0D1017] border-t border-slate-200 dark:border-slate-800 text-center">
             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
-              Local Knowledge-Base Engine • Grounded in RVCE placement curriculum
+              Knowledge-Base Engine • Grounded in RVCE placement curriculum
             </p>
           </div>
         </div>

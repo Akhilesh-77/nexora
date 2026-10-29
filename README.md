@@ -1,7 +1,7 @@
 # NEXORA — Campus Placement Preparation Platform
-### Local-First Engineering & Recruitment Intelligence Engine
+### Enterprise Engineering & Recruitment Intelligence Engine
 
-NEXORA is a comprehensive, production-grade campus placement platform designed to prepare engineering students across multiple disciplines for technical interviews, coding rounds, and aptitude tests. It runs **100% locally** on Windows/Linux/macOS using a local MongoDB Community Server with zero mandatory cloud dependencies, paid AI API keys, or Atlas lock-in.
+NEXORA is a comprehensive, production-grade campus placement platform designed to prepare engineering students across multiple disciplines for technical interviews, coding rounds, and aptitude tests. It features a robust client-server architecture powered by Node.js, Express, and MongoDB, complete with integrated deterministic evaluation engines and zero mandatory cloud dependencies or third-party tracking.
 
 ---
 
@@ -9,7 +9,7 @@ NEXORA is a comprehensive, production-grade campus placement platform designed t
 
 ```
                       ┌────────────────────────────────────────┐
-                      │    NEXORA Local-First Architecture     │
+                      │    NEXORA System Architecture          │
                       └───────────────────┬────────────────────┘
                                           │
                   ┌───────────────────────┴───────────────────────┐
@@ -24,7 +24,7 @@ NEXORA is a comprehensive, production-grade campus placement platform designed t
                                                                 │
                                                                 ▼ (Mongoose ODM)
                                                     ┌────────────────────────┐
-                                                    │ Local MongoDB Server   │
+                                                    │ MongoDB Database Server│
                                                     │ mongodb://127.0.0.1    │
                                                     │ :27017/nexora          │
                                                     └────────────────────────┘
@@ -32,7 +32,7 @@ NEXORA is a comprehensive, production-grade campus placement platform designed t
 
 - **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Lucide React, Canvas Confetti.
 - **Backend:** Node.js, Express, TypeScript, Mongoose, JWT, bcryptjs.
-- **Database:** MongoDB Community Server running locally (`mongodb://127.0.0.1:27017/nexora`), inspected via MongoDB Compass.
+- **Database:** MongoDB Community Server (`mongodb://127.0.0.1:27017/nexora`), inspected via MongoDB Compass.
 - **AI & Evaluation Engine:** High-performance, transparent deterministic rule-based algorithms with domain keyword verification, STAR framework validation, and Google XYZ resume bullet refinement.
 
 ---
@@ -40,12 +40,12 @@ NEXORA is a comprehensive, production-grade campus placement platform designed t
 ## Prerequisites
 
 1. **Node.js:** v18.0.0 or higher.
-2. **MongoDB Community Server:** Installed and running locally as a service on `127.0.0.1:27017`.
+2. **MongoDB Community Server:** Installed and accessible on `127.0.0.1:27017`.
 3. **MongoDB Compass (Optional):** Recommended for viewing database collections directly.
 
 ---
 
-## Quick Start & Local Setup
+## Quick Start & Setup
 
 ### 1. Clone & Install Dependencies
 
@@ -70,7 +70,7 @@ MONGODB_URI=mongodb://127.0.0.1:27017/nexora
 JWT_SECRET=nexora_production_jwt_secret_key_2026_super_secure!
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=AdminSecurePass2026!
-ADMIN_EMAIL=admin@nexora.local
+ADMIN_EMAIL=admin@nexora.edu
 ```
 
 ### 3. Seed Database (Initial Setup)
@@ -149,11 +149,11 @@ Open your browser at **http://localhost:3000**.
 ### 5. Recruiter-Approved Resume Studio
 - 4 ATS-friendly templates (Modern Technical, Classic Professional, Minimal ATS, Executive Clean).
 - Real-time preview with automated Google XYZ bullet point enhancer.
-- Persistent cloud/local sync directly into student's MongoDB account.
+- Persistent real-time sync directly into student's MongoDB account.
 - One-click print / Save as PDF.
 
-### 6. Local-First Offline Resilience
-- If MongoDB is stopped, NEXORA displays a prominent connection warning banner (`Database Offline: Ensure local MongoDB service is running on 127.0.0.1:27017`).
+### 6. High-Availability Database Resilience
+- If MongoDB is stopped, NEXORA displays a prominent connection warning banner (`Database Offline: Ensure MongoDB service is running on 127.0.0.1:27017`).
 - Never silently falls back to Atlas or cloud APIs.
 - Never fabricates scores or progress ("Not assessed yet" shown until real assessments are completed).
 

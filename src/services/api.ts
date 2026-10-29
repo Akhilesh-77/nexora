@@ -311,7 +311,7 @@ export const api = {
     },
   },
 
-  // Local Rule-Based Assistant
+  // Intelligent Career Assistant
   assistant: {
     async query(message: string) {
       return apiRequest<{

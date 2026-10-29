@@ -6,7 +6,7 @@ import { UserProgress } from '../models/UserProgress';
 import { requireAuth, rateLimitLogin, resetLoginAttempts, AuthRequest } from '../middleware/auth';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_local_jwt_key_2026_dev';
+const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_jwt_key_2026_enterprise';
 const PASSWORD_RESET_KEY = process.env.PASSWORD_RESET_KEY || '3456';
 
 // Helper to strip sensitive information

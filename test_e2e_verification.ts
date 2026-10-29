@@ -26,7 +26,7 @@ async function runVerification() {
   console.log(`[1] Database Connection: ${dbConnected ? 'CONNECTED' : 'DISCONNECTED'}`);
   console.log(`    Host: ${dbStatus.host}:${dbStatus.port} / DB: ${dbStatus.name}`);
   if (!dbConnected) {
-    throw new Error('Database is not connected. Local MongoDB service must be running.');
+    throw new Error('Database is not connected. MongoDB service must be running.');
   }
 
   // Spin up test server on port 3099
@@ -484,9 +484,9 @@ async function runVerification() {
     }
 
     // -----------------------------------------------------------
-    // Step 7: Interview Studio & Local Rule-Based AI
+    // Step 7: Interview Studio & Evaluation AI Engine
     // -----------------------------------------------------------
-    console.log('\n--- Step 7: Interview Studio & Local AI ---');
+    console.log('\n--- Step 7: Interview Studio & Evaluation AI Engine ---');
     const interviewRes = await fetch(`${BASE_URL}/api/ai/interview-feedback`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

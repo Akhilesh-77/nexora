@@ -46,7 +46,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: dbStatus.connected ? 'ok' : 'degraded',
     app: 'NEXORA AI — Campus Placement Preparation Platform',
-    mode: 'Local-First Autonomous Engine',
+    mode: 'Campus Placement Intelligence Engine',
     database: dbStatus,
     timestamp: new Date().toISOString(),
   });

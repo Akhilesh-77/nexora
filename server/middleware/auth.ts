@@ -6,7 +6,7 @@ export interface AuthRequest extends Request {
   user?: IUser;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_local_jwt_key_2026_dev';
+const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_jwt_key_2026_enterprise';
 
 export const requireAuth = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {

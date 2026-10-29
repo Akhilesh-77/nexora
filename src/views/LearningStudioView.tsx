@@ -445,7 +445,7 @@ export const LearningStudioView: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-sm font-bold text-[#111827] dark:text-white">Private Revision Notes</h3>
-                  <p className="text-xs text-slate-400">Saved directly to your account in local MongoDB.</p>
+                  <p className="text-xs text-slate-400">Saved directly to your account profile in real-time.</p>
                 </div>
                 {noteSavedFeedback && (
                   <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">

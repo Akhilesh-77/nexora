@@ -104,7 +104,7 @@ export const FAQ_ITEMS: AssistantFaqItem[] = [
     categoryId: 'how-to-use',
     question: 'How is my placement readiness score calculated?',
     shortSummary: 'Exact formula based on real quiz accuracy, coding submissions, and interviews.',
-    answer: `Your Readiness Score in NEXORA is strictly calculated from genuine stored performance data in your local MongoDB database:
+    answer: `Your Readiness Score in NEXORA is strictly calculated from genuine stored performance data in your database:
 
 • **Technical & Aptitude Accuracy (45% weight)**: Calculated as (total correct quiz answers / total questions attempted) * 45.
 • **Coding Problem Mastery (25% weight)**: Evaluated from distinct coding challenges solved in the live isolated sandbox runner.
@@ -370,7 +370,7 @@ Practice these topics under timed test mode in NEXORA's **Practice Lab** to buil
     shortSummary: 'Real isolated child-process execution in Python 3 and Node.js.',
     answer: `Unlike superficial mock platforms that merely compare string output against hardcoded answers, NEXORA executes your real code inside a sandboxed environment:
 
-• **Real Runtime Execution**: When you click **Run Code** or **Submit Solution**, your code is written to an isolated temporary script and executed by your local machine's native Python 3 or Node.js runtime.
+• **Real Runtime Execution**: When you click **Run Code** or **Submit Solution**, your code is written to an isolated temporary script and executed by a sandboxed Python 3 or Node.js runtime.
 • **Security & Resource Guards**: Execution is enforced with a strict **3.0-second timeout** and a **64MB memory limit** to prevent infinite loops or memory exhaustion.
 • **Comprehensive Test Suite**: The runner checks your code against multiple structured input vectors:
   - Public sample cases (displayed in the console for instant debugging).
@@ -563,7 +563,7 @@ NEXORA provides domain modules for ECE, EEE, Mechanical, Chemical, and Civil alo
 • **Idea 3: Custom Storage Engine or Key-Value Store**:
   - Implement an in-memory or disk-backed Log-Structured Merge (LSM) tree or B+ Tree with Write-Ahead Logging (WAL) in C++ or Python.
 • **Idea 4: Domain-Specific AI / Systems Tool**:
-  - Build a campus placement diagnostic engine (like NEXORA!) with local database persistence, process-isolated sandboxed code execution, and structured analytics.
+  - Build a campus placement diagnostic engine (like NEXORA!) with persistent database storage, process-isolated sandboxed code execution, and structured analytics.
 
 Highlight system throughput, latency reductions, test coverage, and architecture diagrams in your GitHub repository README.`,
     actionText: 'Update Project in Resume',
