@@ -31,10 +31,12 @@ const MainAppContent: React.FC = () => {
     sidebarCollapsed,
     dbStatus,
     checkDatabase,
+    retakeMode,
+    exitRetake,
+    retakeAssessment,
   } = useApp();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [retakeMode, setRetakeMode] = useState(false);
 
   // 1. Unauthenticated -> Show Local Authentication Portal
   if (!isAuthenticated) {
@@ -50,22 +52,15 @@ const MainAppContent: React.FC = () => {
   if (isAdmin) {
     // Admins bypass student onboarding and diagnostic
   } else {
-    // 3. Student Authenticated but not onboarded -> Show Multi-Step Onboarding
-    if (!profile.onboarded) {
+    // 3. Student Authenticated: Mandatory Initial Assessment & Personalized Analysis
+    if (!profile.onboarded || !assessmentResult || retakeMode) {
       return (
         <>
           <CinematicCursor />
-          <OnboardingView onComplete={() => setRetakeMode(false)} />
-        </>
-      );
-    }
-
-    // 4. Mandatory Initial Diagnostic Assessment (or explicit retake)
-    if (!assessmentResult || retakeMode) {
-      return (
-        <>
-          <CinematicCursor />
-          <AssessmentView onComplete={() => setRetakeMode(false)} />
+          <AssessmentView
+            onComplete={exitRetake}
+            isRetake={retakeMode}
+          />
         </>
       );
     }
@@ -108,9 +103,7 @@ const MainAppContent: React.FC = () => {
       case 'settings':
         return (
           <ProfileSettingsView
-            onRetakeAssessment={() => {
-              setRetakeMode(true);
-            }}
+            onRetakeAssessment={retakeAssessment}
           />
         );
       default:

@@ -38,9 +38,10 @@ import { ThemeToggle } from '../components/ThemeToggle';
 
 interface AssessmentViewProps {
   onComplete: () => void;
+  isRetake?: boolean;
 }
 
-export const AssessmentView: React.FC<AssessmentViewProps> = ({ onComplete }) => {
+export const AssessmentView: React.FC<AssessmentViewProps> = ({ onComplete, isRetake }) => {
   const {
     profile,
     updateProfile,
@@ -51,6 +52,9 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({ onComplete }) =>
 
   // STAGE MANAGEMENT: 'collect_info' | 'diagnostic_test' | 'analyzing' | 'report'
   const [currentStage, setCurrentStage] = useState<'collect_info' | 'diagnostic_test' | 'analyzing' | 'report'>(() => {
+    if (isRetake) {
+      return 'collect_info';
+    }
     if (assessmentResult && profile.onboarded) {
       return 'report';
     }
@@ -354,7 +358,18 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({ onComplete }) =>
                 <span className="font-bold text-[#4F46E5] dark:text-cyan-400">{profile.targetRole || formData.targetRole}</span>
               </p>
             </div>
+            <div className="flex items-center gap-2.5">
+            {profile.onboarded && (
+              <button
+                type="button"
+                onClick={onComplete}
+                className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                Back to Dashboard
+              </button>
+            )}
             <ThemeToggle />
+          </div>
           </div>
 
           {/* Main Score & Preparation Level Hero */}
@@ -649,7 +664,18 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({ onComplete }) =>
               <Clock className="w-3.5 h-3.5 text-[#4F46E5] dark:text-cyan-400" />
               <span>{formatTimer(elapsedSeconds)}</span>
             </div>
+            <div className="flex items-center gap-2.5">
+            {profile.onboarded && (
+              <button
+                type="button"
+                onClick={onComplete}
+                className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                Back to Dashboard
+              </button>
+            )}
             <ThemeToggle />
+          </div>
           </div>
         </header>
 
@@ -803,7 +829,18 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({ onComplete }) =>
               </h2>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2.5">
+            {profile.onboarded && (
+              <button
+                type="button"
+                onClick={onComplete}
+                className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                Back to Dashboard
+              </button>
+            )}
+            <ThemeToggle />
+          </div>
         </div>
 
         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">

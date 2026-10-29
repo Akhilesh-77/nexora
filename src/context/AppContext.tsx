@@ -54,6 +54,8 @@ interface AppContextType {
     goals?: string[]
   ) => Promise<AssessmentResult>;
   retakeAssessment: () => void;
+  retakeMode: boolean;
+  exitRetake: () => void;
   currentPage: NavPage;
   setCurrentPage: (page: NavPage) => void;
   sidebarCollapsed: boolean;
@@ -351,6 +353,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Resume Data
   const [resumeData, setResumeData] = useState<ResumeData>(DEFAULT_RESUME);
 
+  // Diagnostic Retake Mode
+  const [retakeMode, setRetakeMode] = useState<boolean>(false);
+
   // Global Assistant & Voice Trigger
   const [assistantOpen, setAssistantOpen] = useState(false);
 
@@ -614,6 +619,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setIsAdmin(false);
     setAssessmentResult(null);
     setAssessmentHistory([]);
+    setRetakeMode(false);
     setCurrentPage('overview');
   };
 
@@ -914,28 +920,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
 
     return result;
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#4F46E5', '#6366F1', '#06B6D4', '#10B981'],
-      });
-    } catch (e) {
-      // safe fallback
-    }
-
-    addNotification({
-      title: 'Diagnostic Benchmark Completed!',
-      message: `You scored ${overallScore}%. We tailored your learning roadmap based on verified results.`,
-      type: 'milestone',
-      actionPage: 'overview',
-    });
-
-    return result;
   };
 
   const retakeAssessment = () => {
-    setCurrentPage('overview');
+    setRetakeMode(true);
+  };
+
+  const exitRetake = () => {
+    setRetakeMode(false);
   };
 
   const toggleTask = (id: string) => {
@@ -1104,6 +1096,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         assessmentHistory,
         submitAssessment,
         retakeAssessment,
+        retakeMode,
+        exitRetake,
         currentPage,
         setCurrentPage,
         sidebarCollapsed,

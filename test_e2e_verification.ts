@@ -95,7 +95,11 @@ async function runVerification() {
     if (spoofAdminRes.user.role === 'admin') {
       throw new Error('SECURITY VIOLATION: Public registration allowed setting admin role!');
     }
+    if (spoofAdminRes.user.onboarded !== false) {
+      throw new Error(`Expected new student onboarded=false, got: ${spoofAdminRes.user.onboarded}`);
+    }
     console.log(`✓ Role enforcement verified: Requested "admin", assigned role="${spoofAdminRes.user.role}"`);
+    console.log(`✓ Initial state verified: New student onboarded=${spoofAdminRes.user.onboarded} (triggers Initial Assessment)`);
 
     // Verify duplicate registration error
     const dupRes = await fetch(`${BASE_URL}/api/auth/register`, {
@@ -197,6 +201,73 @@ async function runVerification() {
       body: JSON.stringify({ problemId: 'code-1' }),
     });
     console.log('✓ Bookmark, Note, and Coding challenge completion persisted in MongoDB');
+
+    // -----------------------------------------------------------
+    // Step 4b: Initial Diagnostic Assessment & AI Analysis Persistence
+    // -----------------------------------------------------------
+    console.log('\n--- Step 4b: Initial Assessment & AI Analysis Persistence ---');
+    const mockAssessmentResult = {
+      overallScore: 80,
+      roleCompetencyCoverage: 80,
+      aptitudeScore: 100,
+      reasoningScore: 100,
+      technicalScore: 67,
+      codingScore: 67,
+      preparationLevel: 'Target Ready',
+      strengths: ['Quantitative Aptitude', 'Logical Reasoning'],
+      weakAreas: ['Operating Systems (Page Replacement)'],
+      skillsToImprove: ['Operating Systems'],
+      unassessedSkills: ['Git', 'Docker (Not assessed yet)'],
+      recommendedSubjects: [
+        { subject: 'Operating Systems', topic: 'Virtual Memory & Multi-Level Paging' }
+      ],
+      evaluationDisclaimer: 'This diagnostic report provides an initial competency baseline.',
+      completedAt: 'Oct 30, 2026',
+      totalQuestions: 10,
+      correctCount: 8,
+    };
+
+    const saveAssessmentRes = await fetch(`${BASE_URL}/api/progress/assessment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${studentToken}` },
+      body: JSON.stringify({
+        assessmentResult: mockAssessmentResult,
+        answers: { 101: 2, 102: 1, 103: 0 },
+        skills: ['Python', 'SQL', 'Data Structures', 'Operating Systems'],
+        preparationGoals: ['Dream Tier-1 Placement', 'Master Algorithmic Coding'],
+      }),
+    }).then((r) => r.json());
+
+    if (!saveAssessmentRes.success || !saveAssessmentRes.onboarded) {
+      throw new Error(`Failed to save initial assessment: ${JSON.stringify(saveAssessmentRes)}`);
+    }
+    console.log(`✓ Initial assessment saved to MongoDB. User onboarded: ${saveAssessmentRes.onboarded}`);
+
+    // Verify GET /api/progress retrieves saved assessmentResult
+    const verifyProg = await fetch(`${BASE_URL}/api/progress`, {
+      headers: { Authorization: `Bearer ${studentToken}` },
+    }).then((r) => r.json());
+
+    if (!verifyProg.progress?.assessmentResult) {
+      throw new Error('GET /api/progress did not return saved assessmentResult from MongoDB!');
+    }
+    if (verifyProg.progress.assessmentResult.overallScore !== 80) {
+      throw new Error(`Expected saved overallScore 80, got ${verifyProg.progress.assessmentResult.overallScore}`);
+    }
+    console.log(`✓ Verified MongoDB persistence: overallScore=${verifyProg.progress.assessmentResult.overallScore}%, level="${verifyProg.progress.assessmentResult.preparationLevel}"`);
+
+    // Verify user profile updated onboarded=true and skills/goals in /api/auth/me
+    const verifyMe = await fetch(`${BASE_URL}/api/auth/me`, {
+      headers: { Authorization: `Bearer ${studentToken}` },
+    }).then((r) => r.json());
+
+    if (verifyMe.user.onboarded !== true) {
+      throw new Error(`Expected user.onboarded=true after assessment, got: ${verifyMe.user.onboarded}`);
+    }
+    if (!verifyMe.user.skills?.includes('Operating Systems')) {
+      throw new Error('User skills were not persisted to MongoDB User model!');
+    }
+    console.log(`✓ User profile updated in MongoDB: onboarded=${verifyMe.user.onboarded}, skillsCount=${verifyMe.user.skills.length}, goalsCount=${verifyMe.user.preparationGoals?.length}`);
 
     // -----------------------------------------------------------
     // Step 5: Database Question Bank & Randomized Quizzes
