@@ -131,13 +131,13 @@ const MainAppContent: React.FC = () => {
           sidebarCollapsed ? 'md:ml-20' : 'md:ml-64'
         }`}
       >
-        {/* Global Database Offline Warning Banner */}
+        {/* Global Database Warning Banner */}
         {!dbStatus.connected && (
           <div className="bg-rose-600 text-white px-4 py-2 text-xs font-semibold flex items-center justify-between gap-3 shadow-md z-40">
             <div className="flex items-center gap-2">
               <Server className="w-4 h-4 shrink-0" />
               <span>
-                Database Connection Offline. Your session is running in cached mode until connectivity is restored.
+                Database Connection Unavailable. Your session is running in cached mode until connectivity is restored.
               </span>
             </div>
             <button

@@ -1,7 +1,7 @@
 # NEXORA — Campus Placement Preparation Platform
 ### Enterprise Engineering & Recruitment Intelligence Engine
 
-NEXORA is a comprehensive, production-grade campus placement platform designed to prepare engineering students across multiple disciplines for technical interviews, coding rounds, and aptitude tests. It features a robust client-server architecture powered by Node.js, Express, and MongoDB, complete with integrated deterministic evaluation engines and zero mandatory cloud dependencies or third-party tracking.
+NEXORA is a comprehensive, production-grade campus placement platform designed to prepare engineering students across multiple disciplines for technical interviews, coding rounds, and aptitude tests. It features a robust client-server architecture powered by Node.js, Express, and MongoDB, complete with integrated deterministic evaluation engines, complete user privacy, and zero third-party tracking.
 
 ---
 
@@ -153,9 +153,8 @@ Open your browser at **http://localhost:3000**.
 - One-click print / Save as PDF.
 
 ### 6. High-Availability Database Resilience
-- If MongoDB is stopped, NEXORA displays a prominent connection warning banner (`Database Offline: Ensure MongoDB service is running on 127.0.0.1:27017`).
-- Never silently falls back to Atlas or cloud APIs.
-- Never fabricates scores or progress ("Not assessed yet" shown until real assessments are completed).
+- If MongoDB is stopped, NEXORA displays a prominent connection warning banner (`Database Disconnected: Ensure MongoDB service is running on 127.0.0.1:27017`).
+- Never silently fails or fabricates progress ("Not assessed yet" shown until real assessments are completed).
 
 ---
 

@@ -320,7 +320,7 @@ X must be a Superkey of the relation.`,
     practicalApplications: [
       'High-throughput video streaming (HLS / DASH over TCP).',
       'Database replication over wide-area networks.',
-      'Tuning TCP BBR algorithm in cloud infrastructure (Google BBR replaces loss-based AIMD with model-based bottleneck bandwidth measurement).',
+      'Tuning TCP BBR algorithm in distributed infrastructure (Google BBR replaces loss-based AIMD with model-based bottleneck bandwidth measurement).',
     ],
     commonMistakes: [
       {

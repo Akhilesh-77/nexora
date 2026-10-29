@@ -804,7 +804,7 @@ export const ResumeBuilderView: React.FC = () => {
                         certifications: e.target.value.split('\n').filter((l) => l.trim().length > 0),
                       })
                     }
-                    placeholder="AWS Certified Cloud Practitioner&#10;Oracle Certified Java Associate"
+                    placeholder="AWS Certified Solutions Architect&#10;Oracle Certified Java Associate"
                     className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1017] border border-slate-200 dark:border-slate-800 text-xs text-[#111827] dark:text-white focus:outline-hidden focus:border-[#4F46E5]"
                   />
                 </div>

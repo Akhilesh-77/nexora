@@ -127,13 +127,13 @@ const CAREER_ROLES = [
     category: 'Software Engineering',
     branches: ['Computer Science and Engineering', 'Information Science and Engineering', 'AI/ML'],
     overview: 'Owns end-to-end features spanning client web interfaces, REST/GraphQL APIs, background workers, and database storage.',
-    requiredSkills: ['Frontend (React / Vue)', 'Backend (Node / Python / Java)', 'Database Systems', 'DevOps & Cloud Basics', 'System Integration'],
+    requiredSkills: ['Frontend (React / Vue)', 'Backend (Node / Python / Java)', 'Database Systems', 'DevOps & Infrastructure Basics', 'System Integration'],
     coreConcepts: ['Client-Server Lifecycle', 'API Contract Design', 'End-to-End Authentication', 'Performance Bottlenecks'],
     prerequisites: ['Web programming and database fundamentals'],
     learningRoadmap: [
       { phase: 'Phase 1', title: 'Frontend Fluency', duration: '4 Weeks', topics: ['Component Architecture', 'State Management', 'CSS & Responsive Design'] },
       { phase: 'Phase 2', title: 'Backend Mastery', duration: '4 Weeks', topics: ['API Architecture', 'Database Management', 'Authentication & Auth'] },
-      { phase: 'Phase 3', title: 'Fullstack Deployment', duration: '2 Weeks', topics: ['Docker', 'CI/CD Pipelines', 'Cloud Deployment'] },
+      { phase: 'Phase 3', title: 'Fullstack Deployment', duration: '2 Weeks', topics: ['Docker', 'CI/CD Pipelines', 'Production Deployment'] },
     ],
     technicalInterviewQuestions: [
       { question: 'Walk me through what happens from typing a URL into the browser until the page renders completely.', answerGuidance: 'Cover DNS resolution, TCP handshake, TLS negotiation, HTTP request/response, and browser rendering.', keywords: ['DNS', 'TCP 3-Way Handshake', 'TLS', 'DOM/CSSOM', 'Rendering'] },

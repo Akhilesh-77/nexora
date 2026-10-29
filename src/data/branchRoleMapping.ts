@@ -1256,7 +1256,7 @@ export const getPlacementSimulationForBranchAndRole = (
   // Default: Computer Science & IT or Cross-Domain Software Track
   return {
     id: 'sim-cs',
-    companyName: isCrossDomain ? 'Global Enterprise Software (Tech Hiring Track)' : 'Apex Cloud Systems',
+    companyName: isCrossDomain ? 'Global Enterprise Software (Tech Hiring Track)' : 'Apex Enterprise Systems',
     role: role || 'Software Development Engineer',
     packageLPA: isCrossDomain ? '7.5 - 11.0 LPA' : '12.0 - 18.0 LPA',
     date: new Date().toLocaleDateString(),

@@ -253,7 +253,7 @@ export const AdminDashboardView: React.FC = () => {
             NEXORA System Administration
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Signed in as <span className="font-bold text-[#4F46E5] dark:text-cyan-400">{profile.username || 'admin'}</span> • Database Engine: <code className="font-mono text-xs">MongoDB Primary ({stats?.database?.connected ? 'Online' : 'Offline'})</code>
+            Signed in as <span className="font-bold text-[#4F46E5] dark:text-cyan-400">{profile.username || 'admin'}</span> • Database Engine: <code className="font-mono text-xs">MongoDB Primary ({stats?.database?.connected ? 'Online' : 'Disconnected'})</code>
           </p>
         </div>
 

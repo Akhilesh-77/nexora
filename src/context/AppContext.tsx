@@ -188,7 +188,7 @@ const DEFAULT_RESUME: ResumeData = {
     },
   ],
   certifications: [
-    'AWS Certified Cloud Practitioner',
+    'AWS Certified Solutions Architect',
     'Meta Front-End Developer Certificate',
   ],
   achievements: [
@@ -200,7 +200,7 @@ const DEFAULT_RESUME: ResumeData = {
 
 const DEFAULT_PLACEMENT_SIMULATION: PlacementSimulation = {
   id: 'sim-1',
-  companyName: 'Apex Cloud Systems',
+  companyName: 'Apex Enterprise Systems',
   role: 'Software Developer',
   packageLPA: '18 LPA / $110,000',
   date: new Date().toLocaleDateString(),
@@ -557,7 +557,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [theme]);
 
-  // Sync state to localStorage for offline cache
+  // Sync state to localStorage for session cache
   useEffect(() => {
     localStorage.setItem('nexora_profile', JSON.stringify(profile));
   }, [profile]);
@@ -900,7 +900,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       demonstratedStrengths: strengths,
       priorityCompetencyGaps: weakAreas,
       skillsToImprove: skillsToImprove.length > 0 ? skillsToImprove : ['Algorithmic Optimization under time pressure'],
-      unassessedSkills: unassessedSkills.length > 0 ? unassessedSkills : ['Full-Stack System Architecture', 'Cloud Deployment CI/CD'],
+      unassessedSkills: unassessedSkills.length > 0 ? unassessedSkills : ['Full-Stack System Architecture', 'Production Deployment CI/CD'],
       recommendedSubjects,
       recommendedTopics: weakAreas.length > 0 ? weakAreas : ['Operating Systems', 'Algorithmic Problem Solving'],
       recommendedInterventions: weakAreas.map((w) => `Complete dedicated 30-min module review in ${w}`),
@@ -940,7 +940,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         preparationGoals: goals,
       });
     } catch (saveErr) {
-      console.warn('[NEXORA Assessment] Cloud save warning:', saveErr);
+      console.warn('[NEXORA Assessment] Database save warning:', saveErr);
     }
 
     try {

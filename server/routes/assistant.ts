@@ -62,12 +62,12 @@ Keep explanations under 200 words. Always format with clear markdown bullets.`;
             success: true,
             reply: response.text,
             actionPage,
-            assistantType: 'Cloud AI Engine (Gemini)',
+            assistantType: 'Advanced AI Engine (Gemini)',
             isModelPowered: true,
           });
         }
       } catch (aiErr: any) {
-        console.warn('[NEXORA Assistant] Cloud model unavailable, falling back to deterministic engine:', aiErr.message);
+        console.warn('[NEXORA Assistant] AI model unavailable, falling back to deterministic engine:', aiErr.message);
       }
     }
 

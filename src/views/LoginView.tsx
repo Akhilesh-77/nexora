@@ -296,7 +296,7 @@ export const LoginView: React.FC = () => {
                   }`}
                 />
                 <span className={dbStatus.connected ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-rose-600 dark:text-rose-400 font-semibold'}>
-                  {dbStatus.connected ? 'Database Connected' : 'Database Offline'}
+                  {dbStatus.connected ? 'Database Connected' : 'Database Disconnected'}
                 </span>
               </span>
               <button
@@ -409,7 +409,7 @@ export const LoginView: React.FC = () => {
               <div className="mb-5 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs space-y-1">
                 <div className="flex items-center gap-2 font-bold">
                   <Server className="w-4 h-4 text-rose-500" />
-                  <span>Database Service Offline</span>
+                  <span>Database Service Disconnected</span>
                 </div>
                 <p className="text-[11px] leading-relaxed">
                   Unable to establish a database connection. Please check service status to sign in and synchronize progress.

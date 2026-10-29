@@ -229,7 +229,7 @@ export const APTITUDE_QUESTION_BANK: AptitudeQuestion[] = [
     category: 'Quantitative Aptitude',
     topic: 'Profit, Loss & Discount',
     difficulty: 'Medium',
-    question: 'A cloud hosting provider sells server instances at a 20% discount on marked price and still achieves a 25% profit margin. If the cost price is $480, what is the marked price?',
+    question: 'A technology hosting provider sells server instances at a 20% discount on marked price and still achieves a 25% profit margin. If the cost price is $480, what is the marked price?',
     options: ['$650', '$700', '$750', '$800'],
     correctIndex: 2,
     explanation: 'Cost Price = $480. Profit = 25%, so Selling Price = 480 * 1.25 = $600. The discount is 20%, so SP = 0.80 * Marked Price. Marked Price = 600 / 0.80 = $750.',

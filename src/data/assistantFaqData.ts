@@ -400,7 +400,7 @@ Practice these topics under timed test mode in NEXORA's **Practice Lab** to buil
    • Highlight 1 standout academic/hackathon project and your specific contribution with measurable impact (e.g., "Recently, I architected a distributed task processing engine using Node.js and Redis that handled 10,000 asynchronous tasks with automated failover").
    • Mention your algorithmic fluency (e.g. "I have solved 250+ DSA problems focusing on tree traversals and graph algorithms").
 3. **Future & Company Alignment (30 seconds)**:
-   • Connect your skills to the specific role and company (e.g., "I am eager to contribute to [Company Name]'s cloud infrastructure team where I can apply my systems programming and low-latency API experience").
+   • Connect your skills to the specific role and company (e.g., "I am eager to contribute to [Company Name]'s engineering infrastructure team where I can apply my systems programming and low-latency API experience").
 
 Practice speaking this into NEXORA's Mock Interview voice recorder to assess your vocal cadence and duration.`,
     actionText: 'Practice Spoken Intro',
@@ -521,7 +521,7 @@ The print engine automatically strips the sidebar, navigation orb, and assistant
 
 • **Software Developer / Full Stack**: Builds end-to-end features spanning React frontend and Node/Python backend. Evaluated heavily on algorithmic problem-solving (DSA), Clean OOP code, and RESTful API integration.
 • **Backend / Systems Engineer**: Specializes in database indexing, caching strategies (Redis), concurrency, transaction isolation, and high-throughput microservices. Evaluated on OS fundamentals, SQL/NoSQL trade-offs, and system architecture.
-• **DevOps / Cloud Infrastructure**: Manages automated CI/CD pipelines, Docker containerization, Kubernetes orchestration, infrastructure as code (Terraform), and system observability (Prometheus/Grafana). Evaluated on Linux shell scripting, networking, and deployment reliability.
+• **DevOps / Systems Infrastructure**: Manages automated CI/CD pipelines, Docker containerization, Kubernetes orchestration, infrastructure as code (Terraform), and system observability (Prometheus/Grafana). Evaluated on Linux shell scripting, networking, and deployment reliability.
 
 Check NEXORA's **Role Catalogue** for complete 3-phase roadmaps and required skill profiles for over 26 engineering roles.`,
     actionText: 'View Career Roles',
