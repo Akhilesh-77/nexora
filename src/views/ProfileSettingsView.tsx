@@ -16,6 +16,8 @@ import {
   Compass,
   Briefcase,
   AlertCircle,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import {
@@ -35,6 +37,8 @@ export const ProfileSettingsView: React.FC<{ onRetakeAssessment: () => void }> =
     setTheme,
     uiFont,
     setUiFont,
+    showNexusOrb,
+    setShowNexusOrb,
     resetDemoProgress,
     logout,
     addNotification,
@@ -438,6 +442,65 @@ export const ProfileSettingsView: React.FC<{ onRetakeAssessment: () => void }> =
               <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400 leading-snug">
                 Engineering Terminal. Monospace density for algorithmic problem-solving.
               </p>
+            </button>
+          </div>
+        </div>
+
+        {/* Floating NEXUS Navigation Orb Visibility Control */}
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-[#151821] border border-slate-200 dark:border-slate-800">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Compass className="w-4 h-4 text-[#4F46E5] dark:text-cyan-400" />
+                <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                  Floating NEXUS Navigation Orb
+                </h3>
+                <span
+                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    showNexusOrb
+                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800'
+                      : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-400 border border-slate-300 dark:border-slate-700'
+                  }`}
+                >
+                  {showNexusOrb ? 'Visible' : 'Hidden'}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
+                Hide the circular floating NEXUS Orb at the bottom center of the screen if it gets in the way of content or practice drills.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                const nextState = !showNexusOrb;
+                setShowNexusOrb(nextState);
+                addNotification({
+                  title: nextState ? 'Nexus Orb Visible' : 'Nexus Orb Hidden',
+                  message: nextState
+                    ? 'The floating circular Nexus Orb has been restored at the bottom of the screen.'
+                    : 'The floating Nexus Orb is now hidden. You can restore it anytime in Profile Settings.',
+                  type: 'recommendation',
+                });
+              }}
+              className={`relative inline-flex h-8 w-15 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
+                showNexusOrb
+                  ? 'bg-gradient-to-r from-[#4F46E5] to-cyan-500 shadow-md shadow-indigo-500/25'
+                  : 'bg-slate-300 dark:bg-slate-700'
+              }`}
+              aria-label={showNexusOrb ? 'Hide Nexus Orb' : 'Show Nexus Orb'}
+            >
+              <span
+                className={`pointer-events-none inline-block h-7 w-7 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out flex items-center justify-center ${
+                  showNexusOrb ? 'translate-x-7' : 'translate-x-0'
+                }`}
+              >
+                {showNexusOrb ? (
+                  <Eye className="w-3.5 h-3.5 text-[#4F46E5]" />
+                ) : (
+                  <EyeOff className="w-3.5 h-3.5 text-slate-500" />
+                )}
+              </span>
             </button>
           </div>
         </div>

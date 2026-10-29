@@ -28,7 +28,13 @@ interface ArcItem {
 }
 
 export const FloatingArcNav: React.FC = () => {
-  const { currentPage, setCurrentPage, assistantOpen, setAssistantOpen } = useApp();
+  const {
+    currentPage,
+    setCurrentPage,
+    assistantOpen,
+    setAssistantOpen,
+    showNexusOrb,
+  } = useApp();
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
@@ -160,6 +166,10 @@ export const FloatingArcNav: React.FC = () => {
   const startAngle = 180; // leftmost
   const endAngle = 0; // rightmost
   const angleStep = (startAngle - endAngle) / (navItems.length - 1);
+
+  if (!showNexusOrb) {
+    return null;
+  }
 
   return (
     <div

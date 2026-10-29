@@ -72,6 +72,8 @@ interface AppContextType {
   effectiveTheme: 'dark' | 'light';
   uiFont: 'sans' | 'times' | 'mono';
   setUiFont: (f: 'sans' | 'times' | 'mono') => void;
+  showNexusOrb: boolean;
+  setShowNexusOrb: (show: boolean) => void;
   dailyTasks: DailyTask[];
   toggleTask: (id: string) => void;
   completeTaskByCategory: (category: 'Aptitude' | 'Coding' | 'Technical' | 'Interview Preparation') => void;
@@ -329,6 +331,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const setUiFont = (font: 'sans' | 'times' | 'mono') => {
     setUiFontState(font);
     localStorage.setItem('nexora_font', font);
+  };
+
+  // Floating Nexus Orb Visibility Preference
+  const [showNexusOrb, setShowNexusOrbState] = useState<boolean>(() => {
+    const saved = localStorage.getItem('nexora_show_nexus_orb');
+    return saved !== null ? saved === 'true' : true;
+  });
+
+  const setShowNexusOrb = (show: boolean) => {
+    setShowNexusOrbState(show);
+    localStorage.setItem('nexora_show_nexus_orb', String(show));
   };
 
   // Daily Tasks
@@ -1138,6 +1151,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         effectiveTheme,
         uiFont,
         setUiFont,
+        showNexusOrb,
+        setShowNexusOrb,
         dailyTasks,
         toggleTask,
         completeTaskByCategory,

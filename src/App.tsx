@@ -34,6 +34,7 @@ const MainAppContent: React.FC = () => {
     retakeMode,
     exitRetake,
     retakeAssessment,
+    showNexusOrb,
   } = useApp();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -162,7 +163,7 @@ const MainAppContent: React.FC = () => {
       </div>
 
       {/* Central Floating Nexus Orb Navigation & Voice AI */}
-      <FloatingArcNav />
+      {showNexusOrb && <FloatingArcNav />}
 
       {/* Floating Local AI Assistant */}
       <NexoraAssistant />
