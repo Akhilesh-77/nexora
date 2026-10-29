@@ -157,6 +157,140 @@ async function runVerification() {
     console.log(`✓ Session persistence /me verified for username: ${meRes.user.username}`);
 
     // -----------------------------------------------------------
+    // Step 3b: Forgot Password / Recovery Key & Password Reset
+    // -----------------------------------------------------------
+    console.log('\n--- Step 3b: Forgot Password & Password Reset Verification ---');
+    // 1. Invalid recovery key rejected
+    const badKeyRes = await fetch(`${BASE_URL}/api/auth/verify-recovery-key`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        recoveryKey: '9999',
+      }),
+    });
+    if (badKeyRes.status !== 400) {
+      throw new Error(`Expected 400 for invalid recovery key, got: ${badKeyRes.status}`);
+    }
+    console.log('✓ Invalid recovery key correctly rejected with 400 Bad Request');
+
+    // 2. Unknown account rejected
+    const unknownAcctRes = await fetch(`${BASE_URL}/api/auth/verify-recovery-key`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'ghost_user_99999',
+        recoveryKey: '3456',
+      }),
+    });
+    if (unknownAcctRes.status !== 404) {
+      throw new Error(`Expected 404 for unknown account, got: ${unknownAcctRes.status}`);
+    }
+    console.log('✓ Unknown account correctly rejected with 404 Not Found');
+
+    // 3. Valid recovery key and username accepted
+    const validKeyRes = await fetch(`${BASE_URL}/api/auth/verify-recovery-key`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        recoveryKey: '3456',
+      }),
+    }).then((r) => r.json());
+    if (!validKeyRes.success || validKeyRes.username !== 'e2e_student_2026') {
+      throw new Error(`Recovery key verification failed: ${JSON.stringify(validKeyRes)}`);
+    }
+    console.log(`✓ Valid recovery key (3456) verified for username: ${validKeyRes.username}`);
+
+    // 4. Mismatched passwords rejected during reset
+    const mismatchRes = await fetch(`${BASE_URL}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        recoveryKey: '3456',
+        newPassword: 'BrandNewPass2026!',
+        confirmPassword: 'DifferentPassword2026!',
+      }),
+    });
+    if (mismatchRes.status !== 400) {
+      throw new Error(`Expected 400 for password mismatch, got: ${mismatchRes.status}`);
+    }
+    console.log('✓ Mismatched new passwords correctly rejected with 400 Bad Request');
+
+    // 5. Short password (< 6 chars) rejected during reset
+    const shortPassRes = await fetch(`${BASE_URL}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        recoveryKey: '3456',
+        newPassword: '123',
+        confirmPassword: '123',
+      }),
+    });
+    if (shortPassRes.status !== 400) {
+      throw new Error(`Expected 400 for short password, got: ${shortPassRes.status}`);
+    }
+    console.log('✓ Short password (< 6 chars) correctly rejected with 400 Bad Request');
+
+    // 6. Valid password reset executes and hashes password
+    const validResetRes = await fetch(`${BASE_URL}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        recoveryKey: '3456',
+        newPassword: 'BrandNewPass2026!',
+        confirmPassword: 'BrandNewPass2026!',
+      }),
+    }).then((r) => r.json());
+    if (!validResetRes.success) {
+      throw new Error(`Password reset failed: ${JSON.stringify(validResetRes)}`);
+    }
+    console.log(`✓ Password successfully reset in MongoDB: "${validResetRes.message}"`);
+
+    // 7. Verify OLD password is now REJECTED
+    const oldLoginAttempt = await fetch(`${BASE_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        password: 'Password123!',
+      }),
+    });
+    if (oldLoginAttempt.status !== 401) {
+      throw new Error(`Expected 401 for old password, got: ${oldLoginAttempt.status}`);
+    }
+    console.log('✓ Old password successfully invalidated (401 Unauthorized)');
+
+    // 8. Verify NEW password SUCCEEDS and returns valid JWT
+    const newLoginAttempt = await fetch(`${BASE_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        password: 'BrandNewPass2026!',
+      }),
+    }).then((r) => r.json());
+    if (!newLoginAttempt.token) {
+      throw new Error('Login with new password failed to generate JWT token');
+    }
+    console.log('✓ Login with newly reset password succeeded with valid JWT');
+
+    // 9. Reset password back to original 'Password123!' for the remaining tests
+    await fetch(`${BASE_URL}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        identifier: 'e2e_student_2026',
+        recoveryKey: '3456',
+        newPassword: 'Password123!',
+        confirmPassword: 'Password123!',
+      }),
+    });
+
+    // -----------------------------------------------------------
     // Step 4: Persistent Student Progress & Idempotency
     // -----------------------------------------------------------
     console.log('\n--- Step 4: Persistent Student Progress ---');

@@ -7,6 +7,7 @@ import { requireAuth, rateLimitLogin, resetLoginAttempts, AuthRequest } from '..
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'nexora_super_secret_local_jwt_key_2026_dev';
+const PASSWORD_RESET_KEY = process.env.PASSWORD_RESET_KEY || '3456';
 
 // Helper to strip sensitive information
 const sanitizeUser = (user: any) => {
@@ -319,6 +320,110 @@ router.put('/profile', requireAuth, async (req: AuthRequest, res): Promise<any> 
   } catch (err: any) {
     console.error('[NEXORA Auth] Profile update error:', err);
     return res.status(500).json({ error: 'Failed to update profile.' });
+  }
+});
+
+// 6. Verify Account & Recovery Key (Step 1 of Password Reset)
+router.post('/verify-recovery-key', rateLimitLogin, async (req, res): Promise<any> => {
+  try {
+    const { identifier, recoveryKey } = req.body;
+
+    if (!identifier || !identifier.trim()) {
+      return res.status(400).json({ error: 'Username or email address is required.' });
+    }
+    if (!recoveryKey || !recoveryKey.trim()) {
+      return res.status(400).json({ error: 'Recovery key is required.' });
+    }
+
+    // Verify recovery key against server environment variable
+    if (recoveryKey.trim() !== PASSWORD_RESET_KEY) {
+      return res.status(400).json({ error: 'Invalid recovery key. Please check the key and try again.' });
+    }
+
+    const cleanId = identifier.trim().toLowerCase();
+    const user = await User.findOne({
+      $or: [{ username: cleanId }, { email: cleanId }],
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'No account found matching this username or email.' });
+    }
+
+    if (!user.isActive) {
+      return res.status(403).json({ error: 'This account has been deactivated. Please contact an administrator.' });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Recovery key verified successfully.',
+      username: user.username,
+      name: user.name,
+    });
+  } catch (err: any) {
+    console.error('[NEXORA Auth] Verify recovery key error:', err);
+    return res.status(500).json({ error: 'Server error while verifying recovery key.' });
+  }
+});
+
+// 7. Reset Password (Step 2 of Password Reset)
+router.post('/reset-password', rateLimitLogin, async (req, res): Promise<any> => {
+  try {
+    const { identifier, recoveryKey, newPassword, confirmPassword } = req.body;
+
+    if (!identifier || !identifier.trim()) {
+      return res.status(400).json({ error: 'Username or email address is required.' });
+    }
+    if (!recoveryKey || !recoveryKey.trim()) {
+      return res.status(400).json({ error: 'Recovery key is required.' });
+    }
+    if (!newPassword || !confirmPassword) {
+      return res.status(400).json({ error: 'Both new password and confirmation password are required.' });
+    }
+
+    // Validate recovery key
+    if (recoveryKey.trim() !== PASSWORD_RESET_KEY) {
+      return res.status(400).json({ error: 'Invalid recovery key.' });
+    }
+
+    // Validate matching passwords
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ error: 'New password and confirmation password do not match.' });
+    }
+
+    // Validate minimum password length
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+    }
+
+    const cleanId = identifier.trim().toLowerCase();
+    const user = await User.findOne({
+      $or: [{ username: cleanId }, { email: cleanId }],
+    }).select('+passwordHash');
+
+    if (!user) {
+      return res.status(404).json({ error: 'No account found matching this username or email.' });
+    }
+
+    if (!user.isActive) {
+      return res.status(403).json({ error: 'This account has been deactivated. Please contact an administrator.' });
+    }
+
+    // Securely hash new password with bcrypt
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    user.passwordHash = passwordHash;
+    await user.save();
+
+    // Reset rate limiter on successful password update
+    const ip = req.ip || req.socket.remoteAddress || 'unknown';
+    resetLoginAttempts(ip);
+
+    return res.json({
+      success: true,
+      message: 'Password has been successfully reset. You may now sign in with your new password.',
+    });
+  } catch (err: any) {
+    console.error('[NEXORA Auth] Reset password error:', err);
+    return res.status(500).json({ error: 'Server error while resetting password.' });
   }
 });
 

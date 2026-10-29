@@ -116,6 +116,25 @@ export const api = {
       });
     },
 
+    async verifyRecoveryKey(identifier: string, recoveryKey: string) {
+      return apiRequest<{ username: string; name?: string; message: string }>('/api/auth/verify-recovery-key', {
+        method: 'POST',
+        body: JSON.stringify({ identifier, recoveryKey }),
+      });
+    },
+
+    async resetPassword(data: {
+      identifier: string;
+      recoveryKey: string;
+      newPassword: string;
+      confirmPassword: string;
+    }) {
+      return apiRequest<{ message: string }>('/api/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    },
+
     logout() {
       removeAuthToken();
     },

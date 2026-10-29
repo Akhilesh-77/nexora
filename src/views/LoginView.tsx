@@ -16,14 +16,25 @@ import {
   Server,
   RefreshCw,
   UserCheck,
+  KeyRound,
+  CheckCircle2,
+  ArrowLeft,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ThemeToggle } from '../components/ThemeToggle';
 
 export const LoginView: React.FC = () => {
-  const { login, registerUser, adminLogin, dbStatus, checkDatabase } = useApp();
+  const {
+    login,
+    registerUser,
+    adminLogin,
+    verifyRecoveryKey,
+    resetPassword,
+    dbStatus,
+    checkDatabase,
+  } = useApp();
 
-  const [mode, setMode] = useState<'signin' | 'register' | 'admin'>('signin');
+  const [mode, setMode] = useState<'signin' | 'register' | 'admin' | 'forgot'>('signin');
 
   // Sign In Form State
   const [identifier, setIdentifier] = useState('student');
@@ -41,6 +52,16 @@ export const LoginView: React.FC = () => {
   // Admin Form State
   const [adminIdentifier, setAdminIdentifier] = useState('admin');
   const [adminPasswordInput, setAdminPasswordInput] = useState('AdminSecurePass2026!');
+
+  // Forgot Password / Recovery State
+  const [recoveryStep, setRecoveryStep] = useState<1 | 2>(1); // 1: Verify Key & Account, 2: Set New Password
+  const [recoveryIdentifier, setRecoveryIdentifier] = useState('');
+  const [recoveryKey, setRecoveryKey] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [verifiedUsername, setVerifiedUsername] = useState<string | null>(null);
 
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -103,6 +124,82 @@ export const LoginView: React.FC = () => {
       }
     } catch (err: any) {
       setError(err.message || 'Administrator authentication error.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Step 1: Verify Recovery Key & Account
+  const handleVerifyRecovery = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccessMsg(null);
+
+    if (!recoveryIdentifier.trim()) {
+      setError('Please enter your registered username or email.');
+      return;
+    }
+    if (!recoveryKey.trim()) {
+      setError('Please enter your recovery key.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const res = await verifyRecoveryKey(recoveryIdentifier.trim(), recoveryKey.trim());
+      if (res.success) {
+        setVerifiedUsername(res.username || recoveryIdentifier);
+        setRecoveryStep(2);
+        setSuccessMsg('Recovery key verified successfully! Please enter your new password.');
+      } else {
+        setError(res.error || 'Invalid recovery key or unknown account.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error verifying recovery key.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Step 2: Set New Password
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccessMsg(null);
+
+    if (newPassword.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setError('New password and confirmation password do not match.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const res = await resetPassword({
+        identifier: recoveryIdentifier.trim(),
+        recoveryKey: recoveryKey.trim(),
+        newPassword,
+        confirmPassword,
+      });
+
+      if (res.success) {
+        setSuccessMsg(res.message || 'Password reset successfully! You can now sign in.');
+        setIdentifier(verifiedUsername || recoveryIdentifier.trim());
+        setPassword('');
+        setRecoveryStep(1);
+        setRecoveryKey('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setMode('signin');
+      } else {
+        setError(res.error || 'Failed to reset password.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error updating password.');
     } finally {
       setIsLoading(false);
     }
@@ -231,51 +328,81 @@ export const LoginView: React.FC = () => {
           </div>
 
           <div className="card-cinematic p-7 sm:p-8 rounded-3xl relative overflow-hidden backdrop-blur-2xl">
-            {/* Mode Switcher Tabs */}
-            <div className="flex rounded-xl bg-slate-100 dark:bg-[#121622] p-1 mb-6 border border-slate-200 dark:border-slate-800">
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('signin');
-                  setError(null);
-                }}
-                className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                  mode === 'signin'
-                    ? 'bg-white dark:bg-[#1D2333] text-[#4F46E5] dark:text-cyan-300 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
-                }`}
-              >
-                Sign In
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('register');
-                  setError(null);
-                }}
-                className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                  mode === 'register'
-                    ? 'bg-white dark:bg-[#1D2333] text-[#4F46E5] dark:text-cyan-300 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
-                }`}
-              >
-                Create Account
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('admin');
-                  setError(null);
-                }}
-                className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                  mode === 'admin'
-                    ? 'bg-white dark:bg-[#1D2333] text-indigo-600 dark:text-indigo-400 shadow-xs'
-                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
-                }`}
-              >
-                Admin
-              </button>
-            </div>
+            {/* Mode Switcher Tabs or Account Recovery Header */}
+            {mode === 'forgot' ? (
+              <div className="flex items-center justify-between pb-3 mb-6 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-[#4F46E5] dark:text-cyan-400 flex items-center justify-center">
+                    <KeyRound className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-sm text-[#111827] dark:text-white block">
+                      Account Recovery
+                    </span>
+                    <span className="text-[10px] text-slate-400 block">
+                      {recoveryStep === 1 ? 'Step 1 of 2: Verify Recovery Key' : 'Step 2 of 2: Set New Password'}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('signin');
+                    setError(null);
+                    setSuccessMsg(null);
+                  }}
+                  className="text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back to Sign In</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex rounded-xl bg-slate-100 dark:bg-[#121622] p-1 mb-6 border border-slate-200 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('signin');
+                    setError(null);
+                  }}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                    mode === 'signin'
+                      ? 'bg-white dark:bg-[#1D2333] text-[#4F46E5] dark:text-cyan-300 shadow-xs'
+                      : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
+                  }`}
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('register');
+                    setError(null);
+                  }}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                    mode === 'register'
+                      ? 'bg-white dark:bg-[#1D2333] text-[#4F46E5] dark:text-cyan-300 shadow-xs'
+                      : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
+                  }`}
+                >
+                  Create Account
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('admin');
+                    setError(null);
+                  }}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                    mode === 'admin'
+                      ? 'bg-white dark:bg-[#1D2333] text-indigo-600 dark:text-indigo-400 shadow-xs'
+                      : 'text-slate-500 hover:text-slate-800 dark:hover:text-white'
+                  }`}
+                >
+                  Admin
+                </button>
+              </div>
+            )}
 
             {/* Database Disconnection Warning Banner */}
             {!dbStatus.connected && (
@@ -329,9 +456,24 @@ export const LoginView: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Password
-                  </label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode('forgot');
+                        setRecoveryStep(1);
+                        setRecoveryIdentifier(identifier !== 'student' ? identifier : '');
+                        setError(null);
+                        setSuccessMsg(null);
+                      }}
+                      className="text-xs font-semibold text-[#4F46E5] dark:text-cyan-400 hover:underline cursor-pointer"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                       <Lock className="w-4 h-4" />
@@ -553,6 +695,193 @@ export const LoginView: React.FC = () => {
                   )}
                 </button>
               </form>
+            )}
+
+            {/* MODE 4: FORGOT / RESET PASSWORD */}
+            {mode === 'forgot' && (
+              <div className="space-y-4">
+                {recoveryStep === 1 && (
+                  <form onSubmit={handleVerifyRecovery} className="space-y-4">
+                    <div className="p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-900/60 flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-indigo-600/10 dark:bg-indigo-600/20 text-[#4F46E5] dark:text-cyan-400 flex items-center justify-center shrink-0 mt-0.5">
+                        <KeyRound className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#111827] dark:text-white">
+                          Verify Registered Account
+                        </h4>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                          Provide your registered account username or email address and the recovery key to unlock password reset.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                        Registered Username or Email
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                          <User className="w-4 h-4" />
+                        </div>
+                        <input
+                          type="text"
+                          value={recoveryIdentifier}
+                          onChange={(e) => setRecoveryIdentifier(e.target.value)}
+                          required
+                          placeholder="e.g. student or student@campus.edu"
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#FAF9F5] dark:bg-[#0D1017] border border-slate-200 dark:border-indigo-900/50 text-[#111827] dark:text-white text-sm focus:outline-none focus:border-[#4F46E5] focus:ring-2 focus:ring-indigo-500/20"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                          Demo Recovery Key
+                        </label>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-indigo-50 text-[#4F46E5] dark:bg-indigo-950/80 dark:text-cyan-300 border border-indigo-200/60 dark:border-indigo-800/60">
+                          Local Demo Key: 3456
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                          <KeyRound className="w-4 h-4" />
+                        </div>
+                        <input
+                          type="text"
+                          value={recoveryKey}
+                          onChange={(e) => setRecoveryKey(e.target.value)}
+                          required
+                          placeholder="Enter recovery key (3456)"
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#FAF9F5] dark:bg-[#0D1017] border border-slate-200 dark:border-indigo-900/50 text-[#111827] dark:text-white text-sm font-mono focus:outline-none focus:border-[#4F46E5] focus:ring-2 focus:ring-indigo-500/20"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="btn-cinematic w-full mt-2 py-3.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      {isLoading ? (
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <span>Verify Recovery Key</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+
+                {recoveryStep === 2 && (
+                  <form onSubmit={handleResetPassword} className="space-y-4">
+                    <div className="p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-900/60 flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-emerald-600/10 dark:bg-emerald-600/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#111827] dark:text-white">
+                          Identity Verified: @{verifiedUsername}
+                        </h4>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                          Enter and confirm your new password. It will be encrypted with bcrypt and saved directly to local MongoDB.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                        New Password (min. 6 characters)
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                          <Lock className="w-4 h-4" />
+                        </div>
+                        <input
+                          type={showNewPassword ? 'text' : 'password'}
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          required
+                          minLength={6}
+                          placeholder="Choose new password"
+                          className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#FAF9F5] dark:bg-[#0D1017] border border-slate-200 dark:border-indigo-900/50 text-[#111827] dark:text-white text-sm focus:outline-none focus:border-[#4F46E5] focus:ring-2 focus:ring-indigo-500/20"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowNewPassword(!showNewPassword)}
+                          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                        >
+                          {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                        Confirm New Password
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                          <Lock className="w-4 h-4" />
+                        </div>
+                        <input
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          required
+                          minLength={6}
+                          placeholder="Re-enter new password"
+                          className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#FAF9F5] dark:bg-[#0D1017] border border-slate-200 dark:border-indigo-900/50 text-[#111827] dark:text-white text-sm focus:outline-none focus:border-[#4F46E5] focus:ring-2 focus:ring-indigo-500/20"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                        >
+                          {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="btn-cinematic w-full mt-2 py-3.5 px-4 rounded-xl text-sm font-bold flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      {isLoading ? (
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+                          <span>Update Password & Save to MongoDB</span>
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (recoveryStep === 2) {
+                        setRecoveryStep(1);
+                      } else {
+                        setMode('signin');
+                      }
+                      setError(null);
+                      setSuccessMsg(null);
+                    }}
+                    className="text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <span>{recoveryStep === 2 ? 'Back to Verification' : 'Back to Sign In'}</span>
+                  </button>
+                </div>
+              </div>
             )}
 
             <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-center">

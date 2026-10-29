@@ -42,6 +42,13 @@ interface AppContextType {
   login: (u: string, p: string) => Promise<{ success: boolean; error?: string }>;
   registerUser: (data: any) => Promise<{ success: boolean; error?: string }>;
   adminLogin: (u: string, p: string) => Promise<{ success: boolean; error?: string }>;
+  verifyRecoveryKey: (identifier: string, recoveryKey: string) => Promise<{ success: boolean; username?: string; name?: string; error?: string }>;
+  resetPassword: (data: {
+    identifier: string;
+    recoveryKey: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) => Promise<{ success: boolean; message?: string; error?: string }>;
   logout: () => void;
   profile: UserProfile;
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
@@ -612,6 +619,28 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return { success: false, error: res.error || 'Invalid administrator credentials' };
   };
 
+  // Password Recovery & Reset Handlers
+  const verifyRecoveryKey = async (identifier: string, recoveryKey: string) => {
+    const res = await api.auth.verifyRecoveryKey(identifier, recoveryKey);
+    if (res.success && res.data) {
+      return { success: true, username: res.data.username, name: res.data.name };
+    }
+    return { success: false, error: res.error || 'Failed to verify recovery key.' };
+  };
+
+  const resetPassword = async (data: {
+    identifier: string;
+    recoveryKey: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) => {
+    const res = await api.auth.resetPassword(data);
+    if (res.success) {
+      return { success: true, message: res.data?.message || 'Password reset successfully!' };
+    }
+    return { success: false, error: res.error || 'Failed to reset password.' };
+  };
+
   // Real Logout
   const logout = () => {
     api.auth.logout();
@@ -1089,6 +1118,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         login,
         registerUser,
         adminLogin,
+        verifyRecoveryKey,
+        resetPassword,
         logout,
         profile,
         updateProfile,
