@@ -1,0 +1,8 @@
+{
+  "name": "NEXORA AI — Campus Placement Preparation Platform",
+  "description": "AI-powered campus placement preparation platform for engineering students featuring diagnostic assessments, personalized roadmaps, aptitude practice, coding challenges, AI mock interviews, placement simulators, and resume builder.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

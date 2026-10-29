@@ -1,0 +1,920 @@
+# NEXORA AI — COMPLETE APPLICATION BUILD PROMPT
+
+## 1. YOUR ROLE
+
+Act as a senior UI/UX designer, frontend developer, and full-stack application developer.
+
+Build a beautiful, interactive, responsive web application called **NEXORA AI**.
+
+NEXORA AI is an AI-powered campus placement preparation platform that helps engineering students understand their strengths, discover skill gaps, prepare for placement interviews, practise aptitude, build resumes, and follow a personalized daily learning plan.
+
+Do not create only a landing page, wireframe, or static dashboard. Build a complete working application with navigation, functional buttons, forms, assessments, dashboards, simulated interview interactions, progress tracking, and realistic sample data.
+
+The application should feel like a premium, modern product built by a skilled intermediate developer: visually impressive but simple to understand and easy to use.
+
+## 2. DESIGN VISION — MAKE IT BEAUTIFUL
+
+Create a premium, cinematic, polished UI with excellent visual hierarchy.
+
+The design should feel modern, intelligent, energetic, and motivating for college students.
+
+### Visual style
+
+- Use a premium combination of deep navy, electric violet, blue, and subtle cyan accents.
+- In light mode, use soft off-white backgrounds, white cards, subtle borders, and elegant dark text.
+- In dark mode, use deep navy or charcoal backgrounds, slightly lighter cards, readable text, and subtle glowing accents.
+- Use beautiful gradients selectively rather than covering the entire interface in gradients.
+- Use generous spacing, rounded cards, consistent typography, clean icons, and carefully aligned layouts.
+- Use a modern font such as Inter or a similar readable sans-serif font.
+- Use subtle glass effects only for selected hero panels or overlays.
+- Add tasteful animated gradient backgrounds, glowing progress rings, animated counters, and elegant hover states.
+- Keep every screen clean, readable, and professional. Do not overload the dashboard with too many cards at once.
+- Use realistic sample content instead of placeholder text such as "Lorem ipsum".
+- Avoid a generic template appearance. Establish a recognizable NEXORA AI visual identity.
+
+### Cinematic animations
+
+Add polished animations throughout the app:
+
+- Smooth page transitions and section reveals.
+- Staggered card entrance animations.
+- Subtle background gradients that move slowly.
+- Buttons that gently scale or glow on hover.
+- Animated progress rings and progress bars.
+- Smooth sidebar transitions and dropdown menus.
+- Elegant modal and onboarding transitions.
+- Typing animation for AI responses.
+- Smooth theme switching.
+- Celebratory animation when a student completes an assessment or reaches a milestone.
+- Loading skeletons and friendly loading indicators.
+
+Use CSS transitions, CSS keyframes, and a lightweight animation library such as Framer Motion if appropriate.
+
+Animations must be smooth and purposeful. Respect reduced-motion accessibility settings. Avoid excessive motion, slow page loading, and distracting effects.
+
+## 3. TECHNOLOGY AND PROJECT STRUCTURE
+
+Build a responsive web application using:
+
+- React with TypeScript.
+- HTML and CSS, with Tailwind CSS if appropriate.
+- Lucide icons or another consistent icon library.
+- Reusable UI components.
+- Local state management for interactive features.
+- Local storage for demo login state, student preferences, theme selection, completed tasks, and progress.
+- Python for AI/backend functionality if a Python service is configured.
+- JSON for structured data exchange.
+- Gemini API for AI-powered functionality when configured.
+
+If Google AI Studio provides its standard full-stack environment, use the supported frontend and server-side runtime. Keep API calls on the server side and store API keys in environment secrets.
+
+Do not introduce unnecessary microservices, complex enterprise infrastructure, or a large number of dependencies.
+
+Do not use Firebase.
+
+The app must run successfully in the available environment. If a Python backend cannot be run directly in that environment, implement a clean, functional demo first and keep the backend integration clearly separated.
+
+## 4. LOGIN — DEMO MODE ONLY
+
+Create a beautiful login screen for NEXORA AI.
+
+Login must work with these exact demo credentials:
+
+Username: `123`
+
+Password: `123`
+
+Requirements:
+
+- Do not require email verification.
+- Do not require phone verification.
+- Do not require Google sign-in.
+- Do not require an external authentication API.
+- Include username and password fields.
+- Include a show/hide password button.
+- Include a clearly styled "Sign In" button.
+- Display validation errors for incorrect credentials.
+- When the correct credentials are entered, navigate to the onboarding flow.
+- Allow the demo session to persist after refreshing the page.
+- Add a working logout option in the profile menu.
+- Include a small "Demo Access" label on the login screen.
+
+This is a prototype with fixed demo credentials, not a secure production authentication system. Do not display the credentials prominently to ordinary users.
+
+### Login screen design
+
+Create a split-screen layout on desktop:
+
+Left side:
+- NEXORA AI logo.
+- A compelling headline: "Your potential. Your placement journey."
+- Short supporting text about personalized career preparation.
+- An attractive animated illustration of learning progress, skills, and career growth.
+
+Right side:
+- A clean login card.
+- Username and password fields.
+- Sign In button.
+- Theme toggle.
+- Subtle animated background details.
+
+On mobile, use a beautiful compact layout without horizontal scrolling.
+
+## 5. FIRST-TIME STUDENT ONBOARDING
+
+After login, do not send the student directly to the dashboard.
+
+First, collect the information needed to personalize their placement preparation.
+
+Create a multi-step onboarding wizard with a progress indicator, Back and Continue buttons, smooth transitions, and form validation.
+
+### Step 1 — About You
+
+Ask for:
+
+- Full name.
+- College or university.
+- Current degree.
+- Current year or semester.
+
+### Step 2 — Academic Details
+
+Ask for:
+
+- Engineering branch.
+- Current CGPA or percentage, optional.
+- Graduation year.
+- Preferred programming language.
+
+Provide branch options such as:
+
+- Computer Science and Engineering.
+- Information Science and Engineering.
+- Artificial Intelligence and Machine Learning.
+- Electronics and Communication Engineering.
+- Electrical and Electronics Engineering.
+- Mechanical Engineering.
+- Civil Engineering.
+- Other.
+
+Allow students to select "Other" and enter their branch.
+
+### Step 3 — Career Goals
+
+Ask the student to select one or more career interests:
+
+- Software Engineer.
+- Frontend Developer.
+- Backend Developer.
+- Full-Stack Developer.
+- Data Analyst.
+- Machine Learning Engineer.
+- Cybersecurity Analyst.
+- Cloud Engineer.
+- Other.
+
+Ask about their current preparation level:
+
+- Beginner.
+- Intermediate.
+- Advanced.
+
+Also ask how much time they can study daily:
+
+- 30 minutes.
+- 1 hour.
+- 2 hours.
+- 3 or more hours.
+
+### Step 4 — Learning Preferences
+
+Ask the student what they want to improve:
+
+- Aptitude.
+- Coding.
+- Data structures and algorithms.
+- Core subjects.
+- Communication.
+- Resume building.
+- Technical interviews.
+- HR interviews.
+
+Allow multiple selections.
+
+### Finish onboarding
+
+Show a beautiful welcome screen:
+
+"Welcome to NEXORA AI, [Student Name]!"
+
+Supporting text:
+
+"Let's understand your current skills and build a placement preparation plan that fits you."
+
+Primary button: "Start My Assessment"
+
+Save all onboarding information locally for the demo.
+
+Allow students to edit their profile later.
+
+## 6. MANDATORY INITIAL APTITUDE AND SKILL ASSESSMENT
+
+This is one of the most important features.
+
+Before showing the personalized dashboard for the first time, require the student to complete an initial diagnostic assessment.
+
+Explain clearly that the assessment identifies strengths and areas for improvement. It is not a final judgment of the student's ability.
+
+Create a professional assessment experience with:
+
+- One question at a time.
+- Question number and total questions.
+- Overall progress bar.
+- Multiple-choice answers.
+- A Next button.
+- A Previous button where appropriate.
+- A clear Submit Assessment button.
+- A confirmation dialog before final submission.
+- A visible timer only if the assessment is designed to be timed.
+- A warning before leaving an assessment with unanswered questions.
+- An option to review answers before submission.
+
+### Assessment structure
+
+Create a balanced diagnostic test with approximately 20 questions, adjusted to the student's selected branch and career interests.
+
+For a CSE student, include:
+
+1. Quantitative aptitude.
+2. Logical reasoning.
+3. Verbal ability.
+4. Programming fundamentals.
+5. Data structures and algorithms.
+6. Object-oriented programming.
+7. Database fundamentals.
+8. Operating systems.
+9. Computer networks.
+10. Basic problem-solving.
+
+For other engineering branches, adapt the technical questions to their selected branch. Retain aptitude, reasoning, and communication-related sections.
+
+Use a question bank containing realistic, correctly answerable questions with known correct answers and explanations.
+
+Do not simply repeat the same questions in every category.
+
+### Assessment results
+
+Calculate the student's score from actual answers.
+
+Display:
+
+- Overall score.
+- Aptitude score.
+- Reasoning score.
+- Technical score.
+- Verbal ability score.
+- Strengths.
+- Weak areas.
+- Recommended practice topics.
+- Recommended difficulty level.
+
+Use a beautiful results dashboard with animated score rings, charts, and skill cards.
+
+Example:
+
+"Your strongest area is Logical Reasoning."
+
+"Your biggest improvement opportunity is Data Structures."
+
+Explain each finding using the student's actual assessment results.
+
+Do not generate random results unrelated to their answers.
+
+Provide a "Build My Learning Plan" button. When clicked, create the student's initial personalized roadmap and navigate to the dashboard.
+
+Allow the student to retake the assessment later. Keep previous assessment results in the demo's local storage.
+
+## 7. MAIN APPLICATION LAYOUT
+
+After onboarding and the initial assessment, display the main NEXORA AI dashboard.
+
+Create a polished dashboard with:
+
+### Desktop navigation
+
+Use a collapsible left sidebar containing:
+
+- Overview.
+- My Roadmap.
+- Daily Tasks.
+- Aptitude Practice.
+- Coding Practice.
+- Mock Interviews.
+- Placement Simulator.
+- Resume Builder.
+- Skill Analysis.
+- Progress Reports.
+- My Profile.
+- Settings.
+
+At the top, display the NEXORA AI logo, a page title, a theme toggle, notifications icon, and profile menu.
+
+The sidebar should clearly indicate the selected page.
+
+### Mobile navigation
+
+Create a responsive mobile layout with a compact header and mobile-friendly navigation. Use a bottom navigation bar for the most important sections where appropriate.
+
+Ensure every feature remains accessible on mobile.
+
+## 8. PERSONALIZED STUDENT DASHBOARD
+
+The dashboard must answer five questions:
+
+1. Where am I right now?
+2. What am I good at?
+3. What skills am I missing?
+4. What should I study today?
+5. Am I improving?
+
+### Welcome section
+
+Display:
+
+"Good morning, [Student Name]!"
+
+Use the student's actual name and change the greeting according to the time of day.
+
+Show their selected branch, target role, and current preparation level.
+
+Add a motivational sentence that changes occasionally.
+
+### Dashboard cards
+
+Create visually attractive cards for:
+
+- Overall preparation progress.
+- Current skill level.
+- Daily learning streak.
+- Tasks completed.
+- Aptitude performance.
+- Coding practice progress.
+- Interview readiness checklist.
+- Next recommended activity.
+
+Use meaningful sample data, but clearly distinguish sample values from actual results.
+
+### Today's focus
+
+Create a prominent "Today's Focus" section containing three to five personalized tasks.
+
+Example:
+
+1. Practise 10 quantitative aptitude questions.
+2. Study linked lists for 25 minutes.
+3. Solve one coding problem.
+4. Review two DBMS concepts.
+5. Practise one interview question.
+
+The tasks must change based on the student's assessment results, career goal, and learning preferences.
+
+Every task must have a working Start button and a completion checkbox.
+
+When the student completes a task, update the task count, progress indicators, and daily completion status.
+
+Do not count a task as complete merely because the student opened it.
+
+## 9. PERSONALIZED LEARNING ROADMAP
+
+Create a dedicated roadmap page.
+
+Generate a structured preparation plan based on:
+
+- Engineering branch.
+- Target career role.
+- Initial assessment results.
+- Skill gaps.
+- Daily available study time.
+- Current preparation level.
+
+Organize the roadmap into phases:
+
+- Foundation.
+- Skill Development.
+- Practice.
+- Interview Preparation.
+- Placement Readiness.
+
+For each phase, display:
+
+- Learning objectives.
+- Topics to study.
+- Practical exercises.
+- Estimated duration.
+- Completion percentage.
+- Recommended next step.
+
+Allow students to open individual topics and view their learning material or practice exercises.
+
+Provide a "Start Learning" button.
+
+Allow students to mark a topic as completed only after completing its associated activity or explicitly confirming completion.
+
+When new assessment results or practice performance become available, recommend roadmap adjustments.
+
+Do not promise that following the roadmap guarantees a job.
+
+## 10. DAILY TASK GENERATOR
+
+Build a functional Daily Tasks page.
+
+Generate daily activities using the student's weak areas and career goals.
+
+Each task should include:
+
+- Task title.
+- Short description.
+- Category.
+- Estimated time.
+- Difficulty.
+- Why this task is recommended.
+- Start button.
+- Completion status.
+
+Example:
+
+"Practise Array Problems"
+
+"Your assessment suggests that arrays need more practice. Solve three beginner-level array problems today."
+
+Include filters:
+
+- All.
+- Pending.
+- Completed.
+- Aptitude.
+- Coding.
+- Technical.
+- Interview Preparation.
+
+Add a daily progress indicator and a completion celebration.
+
+The "Generate Today's Tasks" button should create a reasonable set of tasks from the student's current profile and performance. Avoid generating duplicates every time it is clicked.
+
+Persist tasks in local storage.
+
+## 11. APTITUDE PRACTICE
+
+Build a dedicated aptitude training module.
+
+Categories:
+
+- Quantitative Aptitude.
+- Logical Reasoning.
+- Verbal Ability.
+- Data Interpretation.
+
+Include practice topics such as percentages, ratios, averages, time and work, number series, logical patterns, grammar, and reading comprehension.
+
+Features:
+
+- Topic selection.
+- Difficulty selection.
+- Number of questions.
+- Interactive multiple-choice questions.
+- Optional timer.
+- Immediate feedback.
+- Correct answer.
+- Explanation.
+- Score summary.
+- Accuracy percentage.
+- Previous attempts.
+
+Use actual answer checking and meaningful scoring logic.
+
+Allow students to practise one topic at a time.
+
+Recommend topics based on their previous results.
+
+## 12. CODING PRACTICE
+
+Create a beginner-friendly coding practice page.
+
+Include:
+
+- Problem title.
+- Problem description.
+- Difficulty level.
+- Example input and output.
+- Topic tags.
+- Hints.
+- Solution explanation.
+- Mark as solved option.
+
+Start with topics such as:
+
+- Variables and conditions.
+- Loops.
+- Arrays.
+- Strings.
+- Functions.
+- Recursion.
+- Sorting and searching.
+- Linked lists.
+- Stacks and queues.
+- Basic problem-solving.
+
+Allow students to choose a preferred programming language.
+
+If a real code execution service is not configured, do not pretend that submitted code has been executed. Provide a clearly labelled learning/demo mode with sample problems, answer explanations, and completion tracking.
+
+## 13. AI MOCK INTERVIEW SIMULATOR
+
+This should be one of the most impressive parts of NEXORA AI.
+
+Create a dedicated mock interview experience with a professional interview-room interface.
+
+### Interview setup
+
+Ask the student to select:
+
+- Target role.
+- Interview type: Technical, HR, Aptitude Discussion, or Mixed.
+- Difficulty: Beginner, Intermediate, or Advanced.
+- Number of questions.
+- Interview duration.
+
+Provide a "Start Interview" button.
+
+### Interview interface
+
+Display:
+
+- Interview progress.
+- Current question.
+- Question category.
+- Answer input area.
+- Submit Answer button.
+- Next Question button.
+- End Interview button.
+
+Use a conversational interface with an interviewer panel and chat-style answer history.
+
+The interface should feel like a real practice session without pretending that an actual employer is interviewing the student.
+
+### Interview behavior
+
+Ask one question at a time.
+
+Use the student's selected role, branch, difficulty, and previous answers to choose relevant follow-up questions.
+
+If a Gemini API is configured, use it to generate appropriate questions, assess written answers, and provide personalized feedback.
+
+If the API is unavailable, use a predefined interview question bank and rule-based feedback.
+
+Never show a fake AI response as though a real API call succeeded.
+
+### Interview feedback
+
+After completion, display:
+
+- Overall performance score.
+- Technical knowledge.
+- Answer relevance.
+- Clarity of explanation.
+- Communication quality, based only on the written response when using text.
+- Strong answers.
+- Areas for improvement.
+- Suggested model answers.
+- Topics to revise.
+- Recommended next practice.
+
+Clearly explain that scores are practice estimates, not objective hiring decisions.
+
+Save interview history and update relevant skill indicators.
+
+## 14. PLACEMENT SIMULATOR
+
+Create a placement simulation that helps students practise a multi-round hiring process.
+
+Let the student select a target role and begin a simulated placement journey.
+
+Include rounds such as:
+
+1. Aptitude Test.
+2. Technical Assessment.
+3. Technical Interview.
+4. HR Interview.
+
+Each round should have its own instructions, questions, completion status, and feedback.
+
+The student must complete a round before proceeding to the next one, unless they explicitly restart the simulation.
+
+At the end, show:
+
+- Performance in each round.
+- Strongest round.
+- Weakest round.
+- Skills requiring improvement.
+- Recommended preparation activities.
+
+Make the simulator realistic but educational.
+
+Do not claim to predict actual placement selection, hiring probability, or employment outcomes.
+
+## 15. RESUME BUILDER
+
+Create a beautiful resume-building workspace.
+
+Ask the student to enter:
+
+- Full name.
+- Contact information.
+- Career objective.
+- Education.
+- Technical skills.
+- Projects.
+- Internships.
+- Certifications.
+- Achievements.
+- Relevant experience.
+
+Provide a clean form with separate sections and clear labels.
+
+Features:
+
+- Add and remove projects.
+- Add and remove skills.
+- Edit education details.
+- Live resume preview.
+- Simple professional resume templates.
+- Save draft.
+- Edit existing resume.
+- Download as PDF if the available libraries support reliable PDF generation.
+
+Use proper form validation.
+
+Provide an optional AI resume improvement feature that rewrites content clearly without inventing skills, certifications, projects, or achievements.
+
+If Gemini API is unavailable, provide basic rule-based writing suggestions and keep the interface functional.
+
+The resume preview must update when the student edits the form.
+
+## 16. SKILL GAP ANALYSIS
+
+Create a visually clear Skill Analysis page.
+
+Compare the student's demonstrated performance with the skills commonly required for their selected target role.
+
+Use understandable categories such as:
+
+- Strong.
+- Developing.
+- Needs Practice.
+- Not Yet Assessed.
+
+Show each skill's current evidence, assessment result, confidence level where appropriate, and recommended next action.
+
+Use charts and progress bars to explain the findings.
+
+For example:
+
+"Data Structures — Needs Practice"
+
+"Recommendation: Review arrays, linked lists, and time complexity, then complete a short practice test."
+
+Do not claim that a skill is mastered without evidence.
+
+Distinguish between:
+
+- Skills demonstrated through assessment.
+- Skills the student has self-reported.
+- Skills that have not yet been assessed.
+
+Explain why each skill has been assigned its current status.
+
+Use transparent scoring rules. Do not invent real industry requirements or claim to have analysed live job postings unless such data has actually been collected.
+
+## 17. PROGRESS REPORTS
+
+Create a progress dashboard showing improvement over time.
+
+Include:
+
+- Assessment score history.
+- Aptitude accuracy.
+- Coding problems completed.
+- Daily tasks completed.
+- Mock interviews completed.
+- Roadmap completion.
+- Strongest and weakest skill categories.
+
+Use clear charts with labels and readable tooltips.
+
+Show comparisons between previous and latest attempts where historical data exists.
+
+For new users without historical data, show an empty state encouraging them to complete their first activities.
+
+Do not fabricate historical improvement.
+
+## 18. NOTIFICATIONS
+
+Create a functional in-app notification panel.
+
+Include notifications for:
+
+- Today's learning tasks.
+- Incomplete activities.
+- Completed milestones.
+- Upcoming roadmap activities.
+- New practice recommendations.
+
+Provide a mark-as-read action and a clear-all-read action.
+
+Use local demo notifications. Do not require email or SMS services.
+
+## 19. PROFILE AND SETTINGS
+
+Create a complete profile page where students can view and update:
+
+- Name.
+- College.
+- Branch.
+- Semester or year.
+- Graduation year.
+- Target role.
+- Programming language.
+- Preparation level.
+- Daily study availability.
+- Learning preferences.
+
+Add settings for:
+
+- Light theme.
+- Dark theme.
+- System theme.
+- Notification preferences.
+- Reset demo progress.
+- Log out.
+
+Theme selection must apply consistently to the entire application and persist after refresh.
+
+The reset action must show a confirmation dialog before deleting demo progress.
+
+## 20. LIGHT AND DARK THEME
+
+Implement both themes properly.
+
+Add a visible theme toggle using a sun/moon icon.
+
+Requirements:
+
+- Every page must support both themes.
+- Text must remain readable.
+- Cards, menus, inputs, dialogs, charts, and borders must adapt correctly.
+- Avoid low-contrast grey text.
+- Use smooth theme transitions.
+- Remember the selected theme after refresh.
+- Use the system preference as the default when the student has not chosen a theme.
+
+## 21. FUNCTIONAL REQUIREMENTS — NO FAKE BUTTONS
+
+Every visible interactive element must work.
+
+This includes:
+
+- Login.
+- Onboarding forms.
+- Continue and Back buttons.
+- Assessment navigation.
+- Answer selection.
+- Assessment submission.
+- Dashboard navigation.
+- Task completion.
+- Practice question submission.
+- Mock interview responses.
+- Placement round progression.
+- Resume editing.
+- Resume preview.
+- Theme switching.
+- Profile editing.
+- Notifications.
+- Logout.
+- Reset progress.
+
+Use reusable components and consistent state management.
+
+Provide clear validation, loading, success, error, and empty states.
+
+Do not leave buttons that do nothing.
+
+Do not use alerts for every interaction. Prefer elegant inline feedback, toast messages, and confirmation dialogs.
+
+Persist important demo data using local storage so that refreshing the page does not erase progress.
+
+Ensure the user can recover gracefully from invalid form entries and interrupted workflows.
+
+## 22. RESPONSIVE DESIGN AND ACCESSIBILITY
+
+The application must work well on:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Mobile phones.
+
+Ensure:
+
+- No horizontal overflow.
+- Buttons are easy to tap.
+- Forms are comfortable to use on mobile.
+- Sidebar navigation becomes mobile-friendly.
+- Charts resize properly.
+- Text remains readable.
+- Keyboard navigation works.
+- Focus indicators are visible.
+- Forms have proper labels.
+- Animations respect reduced-motion preferences.
+
+## 23. SAMPLE DATA AND PERSONALIZATION
+
+Provide realistic demo content so the application looks complete immediately after the first assessment.
+
+Use sample questions, sample learning tasks, interview questions, coding problems, and roadmap topics.
+
+Personalization must be based on actual inputs and recorded performance.
+
+Example:
+
+If a student scores poorly in quantitative aptitude, recommend aptitude practice.
+
+If a student performs well in programming but poorly in communication-related interview answers, recommend communication and interview practice.
+
+If a student chooses Data Analyst, prioritize SQL, spreadsheets, statistics, data interpretation, and relevant projects.
+
+If a student chooses Software Engineer, prioritize programming, data structures, algorithms, databases, and technical interviews.
+
+Adapt recommendations to other branches and roles as well.
+
+If insufficient evidence exists, clearly label the skill as "Not Yet Assessed" and recommend a diagnostic activity.
+
+## 24. AI INTEGRATION
+
+Integrate the Gemini API for features where it adds genuine value, including:
+
+- Personalized career guidance.
+- Explanation of skill gaps.
+- Learning roadmap suggestions.
+- Daily task recommendations.
+- Mock interview questions and feedback.
+- Resume improvement suggestions.
+
+Use structured prompts and predictable response formats.
+
+Validate model responses before displaying them.
+
+Keep API keys on the server side and never hardcode secrets in frontend code.
+
+If no API key is available, show a clearly labelled demo mode using predefined content and rule-based functionality.
+
+The app must still run without an API key.
+
+Do not claim that a feature is AI-powered when it is only returning fixed demo content.
+
+## 25. FINAL VISUAL QUALITY CHECK
+
+Before finishing, inspect the entire application and correct visual or functional problems.
+
+Check that:
+
+- The login screen looks premium.
+- Onboarding feels smooth.
+- The diagnostic assessment works from beginning to end.
+- The results match the student's answers.
+- The dashboard uses the student's profile.
+- Daily tasks can be completed.
+- The mock interview works from setup to feedback.
+- The placement simulator supports progression through rounds.
+- The resume preview updates correctly.
+- The theme toggle works on every page.
+- Navigation works.
+- Data persists after refresh.
+- Mobile layouts look intentional.
+- There are no broken icons, missing components, overflow issues, or console errors.
+- There are no dead buttons or unfinished placeholder pages.
+
+Do not stop after generating the first screen. Complete the main application workflows.
+
+## 26. FINAL INSTRUCTION
+
+Build NEXORA AI as a cohesive, polished, student-friendly placement preparation platform.
+
+Prioritize these three things:
+
+1. **Exceptional UI:** premium visuals, cinematic but smooth animations, beautiful cards, excellent typography, polished light and dark themes.
+2. **Real functionality:** working login, onboarding, diagnostic assessment, personalized dashboard, daily tasks, aptitude practice, mock interviews, placement simulation, resume builder, and progress tracking.
+3. **Useful personalization:** recommendations must respond to the student's branch, target role, assessment results, and learning progress.
+
+Make the application feel impressive during a college project demonstration while remaining simple enough for an intermediate developer to understand and maintain.
+
+Start by implementing the full application, not by returning a design description or asking me to choose a template. Generate the code, run the available checks, and fix issues you find.

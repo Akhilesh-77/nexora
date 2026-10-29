@@ -1,0 +1,383 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  /* Sophisticated Light Theme Foundation: Warm Ivory, Clean White, Refined Indigo */
+  --color-light-bg: #FAF9F5;
+  --color-light-surface: #FFFFFF;
+  --color-light-elevated: #F4F3ED;
+  --color-primary-indigo: #4F46E5;
+  --color-deep-indigo: #3730A3;
+  --color-deep-plum: #581C87;
+  --color-warm-amber: #F59E0B;
+  --color-warm-coral: #EA580C;
+  --color-cyan-accent: #0891B2;
+  --color-primary-text: #111827;
+  --color-secondary-text: #475569;
+  --color-border-subtle: #E5E7EB;
+  --color-border-warm: #E2E0D8;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --color-dark-bg: #0B0E14;
+  --color-dark-surface: #141824;
+  --color-dark-elevated: #1B2132;
+  --color-primary-text: #F8FAFC;
+  --color-secondary-text: #94A3B8;
+  --color-border-subtle: #232B3E;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--color-light-bg);
+    color: var(--color-primary-text);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    overflow-x: hidden;
+  }
+
+  .dark body {
+    background-color: #0A0D14;
+    color: #F8FAFC;
+  }
+
+  button,
+  [role="button"],
+  a,
+  select {
+    cursor: pointer;
+  }
+
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
+}
+
+/* ------------------------------------------------------------- */
+/* TYPOGRAPHY PREFERENCES (Times New Roman / Modern Sans / Mono) */
+/* ------------------------------------------------------------- */
+
+body.font-times,
+.font-times {
+  font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif !important;
+}
+
+body.font-sans-modern,
+.font-sans-modern {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+body.font-mono-code,
+.font-mono-code {
+  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace !important;
+}
+
+/* ------------------------------------------------------------- */
+/* KEYFRAME ANIMATIONS FOR CINEMATIC BACKGROUND & MICRO-EFFECTS   */
+/* ------------------------------------------------------------- */
+
+@keyframes float-slow-1 {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(35px, -25px, 0) scale(1.08) rotate(4deg);
+  }
+  66% {
+    transform: translate3d(-20px, 20px, 0) scale(0.94) rotate(-3deg);
+  }
+}
+
+@keyframes float-slow-2 {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(-35px, 20px, 0) scale(1.06) rotate(-5deg);
+  }
+  66% {
+    transform: translate3d(25px, -30px, 0) scale(0.96) rotate(4deg);
+  }
+}
+
+@keyframes float-slow-3 {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(15px, 25px, 0) scale(1.14);
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+@keyframes subtle-breathe {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-2px) scale(1.008); }
+}
+
+@keyframes head-nod {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  35% { transform: translateY(1.5px) rotate(0.6deg); }
+  70% { transform: translateY(-1px) rotate(-0.4deg); }
+}
+
+@keyframes voice-wave {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.15); opacity: 0.9; }
+}
+
+/* ------------------------------------------------------------- */
+/* UIVERSE & MAGIC UI INSPIRED BUTTONS                           */
+/* ------------------------------------------------------------- */
+
+/* Primary Button: Refined Indigo & Violet with Shimmer Sweep */
+.btn-cinematic {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #4F46E5 0%, #4338CA 60%, #6366F1 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px -2px rgba(79, 70, 229, 0.35), 0 0 0 1px rgba(79, 70, 229, 0.15);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.dark .btn-cinematic {
+  background: linear-gradient(135deg, #4F46E5 0%, #3730A3 50%, #06B6D4 110%);
+  box-shadow: 0 4px 18px -2px rgba(79, 70, 229, 0.45), 0 0 0 1px rgba(79, 70, 229, 0.2);
+}
+
+.btn-cinematic::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+}
+
+.btn-cinematic:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 22px -2px rgba(79, 70, 229, 0.45), 0 0 16px rgba(99, 102, 241, 0.3);
+}
+
+.btn-cinematic:hover::after {
+  animation: shimmer-sweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.btn-cinematic:active {
+  transform: translateY(0.5px) scale(0.98);
+}
+
+/* Secondary Button: Warm Ivory / White Tactile Card */
+.btn-cinematic-secondary {
+  position: relative;
+  background: #FFFFFF;
+  color: #1E293B;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .btn-cinematic-secondary {
+  background: rgba(26, 31, 44, 0.85);
+  color: #F8FAFC;
+  border: 1px solid rgba(79, 70, 229, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-cinematic-secondary:hover {
+  transform: translateY(-1px);
+  background: #FAF9F6;
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+}
+
+.dark .btn-cinematic-secondary:hover {
+  border-color: #06B6D4;
+  box-shadow: 0 6px 20px -3px rgba(6, 182, 212, 0.3);
+}
+
+/* Warm Accent CTA Button (Amber / Coral) */
+.btn-cinematic-accent {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #EA580C 0%, #D97706 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px -2px rgba(234, 88, 12, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-cinematic-accent:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 20px -2px rgba(234, 88, 12, 0.45);
+}
+
+/* ------------------------------------------------------------- */
+/* CINEMATIC CARDS: WARM ELEVATION & CRISP EDGES                 */
+/* ------------------------------------------------------------- */
+
+.card-cinematic {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 4px 16px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .card-cinematic {
+  background: linear-gradient(145deg, rgba(20, 24, 36, 0.85) 0%, rgba(14, 17, 26, 0.95) 100%);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.card-cinematic:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 24px -4px rgba(79, 70, 229, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-cinematic:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(79, 70, 229, 0.25);
+}
+
+/* Luminous Glow Border for Featured Cards */
+.luminous-border {
+  position: relative;
+}
+
+.luminous-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.3), rgba(234, 88, 12, 0.2), transparent 75%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.dark .luminous-border::before {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.6), rgba(6, 182, 212, 0.6), transparent 70%);
+}
+
+/* Micro Dot Pattern */
+.cyber-grid {
+  background-image: radial-gradient(rgba(99, 102, 241, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .cyber-grid {
+  background-image: radial-gradient(rgba(79, 70, 229, 0.25) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Custom Sleek Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 70, 229, 0.6);
+}
+
+/* Print Styles for Resume Generator */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 14mm 14mm;
+  }
+
+  html, body {
+    background: white !important;
+    color: #111827 !important;
+    font-size: 10.5pt !important;
+    line-height: 1.35 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  aside,
+  header,
+  nav,
+  button,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Prevent page-break truncation inside sections */
+  h1, h2, h3, h4 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  .resume-section,
+  .resume-item,
+  article,
+  section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print\:p-0 {
+    padding: 0 !important;
+  }
+
+  .print\:border-none {
+    border: none !important;
+  }
+
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+
+  .print\:rounded-none {
+    border-radius: 0 !important;
+  }
+}
